@@ -7,9 +7,9 @@ import glob
 import re
 import networkx as nx
 import numpy as np
-from nltk.tag import pos_tag
 from nltk.tokenize import word_tokenize
-from configparser import ConfigParser
+from nltk.tag import pos_tag
+from ConfigParser import ConfigParser
 from collections import defaultdict, Counter
 from operator import itemgetter
 
@@ -131,7 +131,7 @@ def remove_duplicates(cc, sim_func=intersection_sim):
     """
     Use affinity propagation to remove duplicate candidates.
     """
-    from scikits.learn.cluster import affinity_propagation
+    from scikit.learn.cluster import affinity_propagation
     li = cc.keys()
     sim_matrix = np.zeros((len(li), len(li)))
     for i, e1 in enumerate(li):
@@ -206,6 +206,18 @@ def traverse(graph, nodes_pri, node, sentence, pri_so_far, score, clist, collaps
                 traverse(graph, nodes_pri, neighbor, new_sentence,
                          pri_new, new_score, clist, False)
 
+def untag(sentence):
+    '''
+        Removing the tags from a sentence and formatting it into a nice sentence
+    '''
+    
+    untagged_sentence = " ".join([word.split("/")[0] for word in sentence.split()])
+    untagged_sentence = untagged_sentence.capitalize()
+    untagged_sentence = untagged_sentence.replace(" , ",", ")
+    untagged_sentence = untagged_sentence.replace(" n't"," not")
+    untagged_sentence = untagged_sentence.replace(" 's","'s")
+    return untagged_sentence
+
 def summarize(graph, nodes_pri):
     """
     Create summaries from the Opinosis graph. 
@@ -235,9 +247,11 @@ if __name__ == '__main__':
             reviews.append(review)
         f.close()
 
+#    review_files = ["tmp_reviews"]
+#    review_files = reviews[0]
     tokenized_reviews = []
     "Tokenizes and and labels each word with POS tags"
-    for review in reviews[0]:
+    for review in reviews[9]:
         tokenized_reviews.append(" ".join([word.lower()+"/"+tag for word,tag in pos_tag(word_tokenize(review))]))
     
     filename = "tagged_reviews.tmp"
@@ -246,8 +260,7 @@ if __name__ == '__main__':
         for review in tokenized_reviews:
             f.write(review+"\n")
     f.close()
-    #
-#    for e in filename:
+
     edges_cnt, nodes_pri = create_graph(filename)
 
     with open('review_edges', 'w') as f:
@@ -255,14 +268,16 @@ if __name__ == '__main__':
             f.write(" ".join([bigram[0], bigram[1]]) + 
                         " " + str(edges_cnt[bigram]))
             f.write("\n")
+
     G = nx.read_edgelist('review_edges', create_using=nx.DiGraph(),
                              data=(('count',int),))
     cp = ConfigParser()
     cp.read("opinosis.properties")
     candidates = summarize(G, nodes_pri)
-        #remove_duplicates(candidates)
+    candidates = remove_duplicates(candidates)
 
     li = candidates.items()
     li.sort(key=itemgetter(1), reverse=True)
     for e in li:
-        print(e[0], e[1])
+        untagged_sentence = untag(e[0])
+        print untagged_sentence, e[1]
