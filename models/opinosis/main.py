@@ -36,26 +36,20 @@ for file_ in allFiles:
     with open(file_, "r") as f:
         review = f.read().splitlines()
         reviews.append(review)
-
-# try with simple reviews
-graph, nodes_PRI = get_graph(reviews[50])
-
-
-
-
-candidates = summarizer(graph,nodes_PRI)
-print candidates
-
-tmp = remove_duplicates(candidates,parameters["SIGMA_SIM"])
-
-# use the JP and R scores to discriminate which candidate sentences should be thrown out
-
-for sentence, score in Counter(tmp).most_common():
-	clean_sentence = untag(sentence)
-#	JP_score = joint_probability(clean_sentence)
-#	R_score = readability_score(clean_sentence)
-	print clean_sentence, score
+        try:
+                graph, nodes_PRI = get_graph(review)
+                candidates = summarizer(graph,nodes_PRI)
+                tmp = remove_duplicates(candidates,parameters["SIGMA_SIM"])
+                for sentence, score in Counter(tmp).most_common():
+                        clean_sentence = untag(sentence)
+                        #	JP_score = joint_probability(clean_sentence)
+                        # 	R_score = readability_score(clean_sentence)
+                        print clean_sentence, score
 #, JP_score, R_score"""
+        except:
+                pass
+
+
 
 
 
