@@ -1,5 +1,6 @@
 #Python-Script for LexRank Calculation Example
 #Author: Franziska Weng
+#Implemented by Obiamaka Agbaneje
 #License: Attribution 4.0 International (CC BY 4.0)
 #License-URL: https://creativecommons.org/licenses/by/4.0/
 
@@ -63,13 +64,52 @@ def calculate_pagerank(binary_cosine_matrix, d):
     return pr
 
 
-#INPUT
+def lexrank(documents, t=0.1, d=0.5):
+    #input text
+    documents = np.array(documents)
+    #PROCESS
+    #set number of documents N
+    N = len(documents)
+    #split documents into words
+    words_in_documents = np.array([np.array([word 
+            for word in re.split(r'[^A-Za-z]+', str(document).lower()) if len(word) > 0])
+        for document in documents])
 
-#cosine threshold
-t = 0.1
+    #extract all unique words
+    words = np.unique([word_in_document
+            for words_in_document in words_in_documents
+        for word_in_document in words_in_document])
 
-#damping factor
-d = 0.5
+    #create dictionary of inverse document frequencies (idf)
+    dict_idf = [dict([w, float(df)]
+                for w, df in dict(np.array([words, [np.log(N / sum([word in words_in_document
+            for words_in_document in words_in_documents]))
+        for word in words]]).T).items())][0]
+#    print(r'Inverse document frequencies:', dict_idf)
+
+    #split documents into sentences
+    sentences_in_documents = [re.split(r'[.!?;]\s{0,5}', str(document).lower())[:-1]
+        for document in documents]
+
+    #extract words in sentences
+    words_in_sentences_in_documents = [[[word
+                for word in re.split(r'[^A-Za-z]+', sentence_in_document) if len(word) > 0]
+            for sentence_in_document in sentences_in_document]
+        for sentences_in_document in sentences_in_documents]
+
+    #calculate overall summary applying lexrank
+    sentences = [sentences
+        for words_in_sentences_in_document in words_in_sentences_in_documents
+            for sentences in words_in_sentences_in_document]
+    overall_summary = r' '.join(sentences[np.argmax(calculate_pagerank(
+                np.array([[idf_modified_cosine_binary(sentence_x, sentence_y, t, dict_idf)
+            for sentence_y in sentences]
+        for sentence_x in sentences]), d))])
+    return overall_summary
+
+#cosine threshold t = 0.1
+
+#damping factor d = 0.5
 
 path = r'../data/raw/OpinosisDataset1.0_0/topics/'
 allFiles = glob.glob(path + "/*.data")
@@ -79,60 +119,11 @@ for file_ in allFiles:
         review = f.readlines()
         reviews.append(review)
         
-#input text 
-documents = np.array(reviews[4])
+for review in reviews:
+    print(lexrank(review))
 
-#PROCESS
 
-#set number of documents N
-N = len(documents)
 
-#split documents into words
-words_in_documents = np.array([np.array([word 
-        for word in re.split(r'[^A-Za-z]+', str(document).lower()) if len(word) > 0])
-    for document in documents])
 
-#extract all unique words
-words = np.unique([word_in_document
-        for words_in_document in words_in_documents
-    for word_in_document in words_in_document])
 
-#create dictionary of inverse document frequencies (idf)
-dict_idf = [dict([w, float(df)]
-            for w, df in dict(np.array([words, [np.log(N / sum([word in words_in_document
-        for words_in_document in words_in_documents]))
-    for word in words]]).T).items())][0]
-print(r'Inverse document frequencies:', dict_idf)
 
-#split documents into sentences
-sentences_in_documents = [re.split(r'[.!?;]\s{0,5}', str(document).lower())[:-1]
-    for document in documents]
-
-#extract words in sentences
-words_in_sentences_in_documents = [[[word
-            for word in re.split(r'[^A-Za-z]+', sentence_in_document) if len(word) > 0]
-        for sentence_in_document in sentences_in_document]
-    for sentences_in_document in sentences_in_documents]
-
-#calculate overall summary applying lexrank
-sentences = [sentences
-    for words_in_sentences_in_document in words_in_sentences_in_documents
-        for sentences in words_in_sentences_in_document]
-overall_summary = r' '.join(sentences[np.argmax(calculate_pagerank(
-            np.array([[idf_modified_cosine_binary(sentence_x, sentence_y, t, dict_idf)
-        for sentence_y in sentences]
-    for sentence_x in sentences]), d))])
-print(r'Overall summary:', overall_summary)
-
-#print idf cosine matrix
-"""print([[round(idf_modified_cosine(sentence_x, sentence_y, dict_idf), 2)
-        for sentence_y in sentences]
-    for sentence_x in sentences])"""
-
-#calculate document summaries applying lexrank
-"""document_summaries = [r' '.join(words_in_sentences_in_document[np.argmax(calculate_pagerank(
-                np.array([[idf_modified_cosine_binary(sentence_x, sentence_y, t, dict_idf)
-            for sentence_y in words_in_sentences_in_document]
-        for sentence_x in words_in_sentences_in_document]), d))])
-    for words_in_sentences_in_document in words_in_sentences_in_documents]
-print(r'Document summaries:', document_summaries)"""
