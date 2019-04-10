@@ -6,15 +6,16 @@ import re
 summaryFiles = glob.glob(r'../data/processed/textrank/*')
 fileNames = []
 #goldSummaries = glob.glob(r'..data/raw/OpinosisDataset1.0_0/summaries-gold/*/')
-directories = os.walk(r'../data/raw/OpinosisDataset1.0_0/summaries-gold')
-directory_list = next(directories)[1]
+gold_summaries = os.walk(r'../data/raw/OpinosisDataset1.0_0/summaries-gold')
+gold_list = next(gold_summaries)[1]
+
 for h in summaryFiles:
     foldername_search = re.search(r'[^\\/:*?"<>|\r\n]+$', h)
     foldername = (foldername_search.group()).split('.')[0]
     with open(h, 'r') as f:
         hypothesis = f.read()
     f.close()
-    if foldername in directory_list:
+    if foldername in gold_list:
         files = glob.glob('../data/raw/OpinosisDataset1.0_0/summaries-gold/'+foldername+'/*')
         for r in files:
             with open(r, 'r') as f:
@@ -22,27 +23,65 @@ for h in summaryFiles:
             f.close()
             rouge = Rouge()
             scores = rouge.get_scores(hypothesis, reference)
-            print(scores)
+            print('TexRank:', scores)
 
  
 
-        
-#print(directory_list)
+summaryFiles = glob.glob(r'../data/processed/lexrank/*')
+fileNames = []
 
-"""for filename in fileNames:
-    for _, y, _ in directories:
-        print(filename in y)"""
+for h in summaryFiles:
+    foldername_search = re.search(r'[^\\/:*?"<>|\r\n]+$', h)
+    foldername = (foldername_search.group()).split('.')[0]
+    with open(h, 'r') as f:
+        hypothesis = f.read()
+    f.close()
+    if foldername in gold_list:
+        files = glob.glob('../data/raw/OpinosisDataset1.0_0/summaries-gold/'+foldername+'/*')
+        for r in files:
+            with open(r, 'r') as f:
+                reference = f.read()
+            f.close()
+            rouge = Rouge()
+            scores = rouge.get_scores(hypothesis, reference)
+            print('Lexrank', scores)
 
 
+summaryFiles = glob.glob(r'../data/processed/textrank_cosine/*')
+fileNames = []
 
+for h in summaryFiles:
+    foldername_search = re.search(r'[^\\/:*?"<>|\r\n]+$', h)
+    foldername = (foldername_search.group()).split('.')[0]
+    with open(h, 'r') as f:
+        hypothesis = f.read()
+    f.close()
+    if foldername in gold_list:
+        files = glob.glob('../data/raw/OpinosisDataset1.0_0/summaries-gold/'+foldername+'/*')
+        for r in files:
+            with open(r, 'r') as f:
+                reference = f.read()
+            f.close()
+            rouge = Rouge()
+            scores = rouge.get_scores(hypothesis, reference)
+            print('TextRank Cosine', scores)
 
-"""for filename in fileNames:
-    if filename in directory_list:
-        print(filename)"""
-#print(directory_list)
+summaryFiles = glob.glob(r'../data/processed/lsa/*')
+fileNames = []
 
-"""files_rouge = FilesRouge(hyp_path, ref_path)
-scores = files_rouge.get_scores()
-
-scores = files_rouge.get_scores(avg=True)"""
+for h in summaryFiles:
+    foldername_search = re.search(r'[^\\/:*?"<>|\r\n]+$', h)
+    foldername = (foldername_search.group()).split('.')[0]
+    with open(h, 'r') as f:
+        hypothesis = f.read()
+    f.close()
+    if foldername in gold_list:
+        files = glob.glob('../data/raw/OpinosisDataset1.0_0/summaries-gold/'+foldername+'/*')
+        for r in files:
+            with open(r, 'r') as f:
+                reference = f.read()
+            f.close()
+            rouge = Rouge()
+            scores = rouge.get_scores(hypothesis, reference)
+            print('LSA', scores)
 

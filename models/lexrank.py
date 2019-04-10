@@ -117,10 +117,13 @@ reviews = list()
 for file_ in allFiles:
     with open(file_, "r") as f:
         review = f.readlines()
-        reviews.append(review)
+        filename_search = re.search(r'[^\\/:*?"<>|\r\n]+$', file_)
+        filename = filename_search.group()
+        myfile = open(r'../data/processed/lexrank/' + filename, 'w')
+        myfile.writelines(lexrank(review))
+        myfile.close()
         
-for review in reviews:
-    print(lexrank(review))
+
 
 
 

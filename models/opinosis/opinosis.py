@@ -350,7 +350,7 @@ def summarizer(graph,nodes_PRI,parameters=parameters):
 
 # ---> Please use your key <---
 
-OXFORD_LANGUAGE_MODEL_ENDPOINT = "https://api.projectoxford.ai/text/weblm/v1.0/"
+OXFORD_LANGUAGE_MODEL_ENDPOINT = "https://od-api.oxforddictionaries.com/api/v1"
 SUBSCRIPTION_KEY_NAME = ""
 DEFAULT_SUBSCRIPTION_KEY = ""
 
