@@ -9,7 +9,6 @@ import operator
 import requests
 import json
 from sklearn.cluster import KMeans
-from bs4 import UnicodeDammit
 
 #### MODEL parameters
 
@@ -29,7 +28,7 @@ parameters = {
 def get_graph(reviews):
     tokenized_reviews = []
     for review in reviews:
-        review = (review.encode('ascii', 'ignore')).decode("utf-8")
+        review = review.decode('utf-8')
         tokenized_reviews.append(" ".join([word.lower()+"/"+tag for word,tag in pos_tag(word_tokenize(review))]))
     
     filename = "tagged_reviews.tmp"
@@ -188,7 +187,7 @@ def rreplace(s, old, new, occurrence):
 def stitch(c_anchor, cc, SENTIMENT_DIFF):
 	joined_sentence = " ".join(c_anchor)+" "
 	#
-	dummy = np.array(sorted([(key,score) for key, score in list(cc.items())],key=operator.itemgetter(1),reverse=True))
+	dummy = np.array(sorted([(key,score) for key, score in cc.items()],key=operator.itemgetter(1),reverse=True))
 	all_ccs, scores = dummy[:,0], dummy[:,1].astype("float")
 	#
 	max_length = len(all_ccs)
@@ -196,34 +195,34 @@ def stitch(c_anchor, cc, SENTIMENT_DIFF):
 		joined_sentence += all_ccs[0]
 		return joined_sentence
 	#
-	#sentiments = [TextBlob(untag(the_cc)).sentiment.polarity for the_cc in all_ccs]
+	sentiments = [TextBlob(untag(the_cc)).sentiment.polarity for the_cc in all_ccs]
 	#
-	#group = KMeans(n_clusters=2)
-	#group.fit(np.array(sentiments).reshape(-1,1))
-	#groups = group.labels_
-	#groups_distance = abs(group.cluster_centers_[0]-group.cluster_centers_[1])
+	group = KMeans(n_clusters=2)
+	group.fit(np.array(sentiments).reshape(-1,1))
+	groups = group.labels_
+	groups_distance = abs(group.cluster_centers_[0]-group.cluster_centers_[1])
 	#
 	# if there are two groups of words with very different sentiment
 	# then joined them together with `but/CC`
-	#if(groups_distance>=SENTIMENT_DIFF):
+	if(groups_distance>=SENTIMENT_DIFF):
 		# which group is more redundant
-		#redundancy = [np.mean(scores[groups==the_group]) for the_group in [0,1]]
+		redundancy = [np.mean(scores[groups==the_group]) for the_group in [0,1]]
 		# put in front the group with the highest average redundancy
-		#sorted_groups = np.array(sorted(zip(redundancy,[0,1]),reverse=True))[:,1]
-		#group_0_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[0]],all_ccs[groups==sorted_groups[0]]),reverse=True))[:,1])
-		#group_0_stitched = rreplace(group_0_stitched," , "," and/DT ",1)
-		#joined_sentence += group_0_stitched
+		sorted_groups = np.array(sorted(zip(redundancy,[0,1]),reverse=True))[:,1]
+		group_0_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[0]],all_ccs[groups==sorted_groups[0]]),reverse=True))[:,1])
+		group_0_stitched = rreplace(group_0_stitched," , "," and/DT ",1)
+		joined_sentence += group_0_stitched
 		#
-		#joined_sentence += " but/CC "
+		joined_sentence += " but/CC "
 		#
-		#group_1_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[1]],all_ccs[groups==sorted_groups[1]]),reverse=True))[:,1])
-		#group_1_stitched = rreplace(group_1_stitched," , "," and/DT ",1)
-		#joined_sentence += group_1_stitched
+		group_1_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[1]],all_ccs[groups==sorted_groups[1]]),reverse=True))[:,1])
+		group_1_stitched = rreplace(group_1_stitched," , "," and/DT ",1)
+		joined_sentence += group_1_stitched
 	#
 	# otherwise just stitch all the pieces with commas and a `and/DT` if more than three pieces
-	#else:
-	stitched_sentences = " , ".join(all_ccs)
-	joined_sentence += rreplace(stitched_sentences," , "," and/DT ",1)
+	else:
+		stitched_sentences = " , ".join(all_ccs)
+		joined_sentence += rreplace(stitched_sentences," , "," and/DT ",1)
 	#
 	return joined_sentence
 
@@ -264,7 +263,7 @@ def remove_duplicates(tmp,SIGMA_SIM):
         sentences_to_keep.append(sentences[similar_sentences][order][0])
         # removing the other sentence
         for sentence_to_remove in np.unique(sentences[similar_sentences][order]):
-            sentences_to_examine = list([x for x in sentences_to_examine if x!=sentence_to_remove])
+            sentences_to_examine = list(filter(lambda x:x!=sentence_to_remove,sentences_to_examine))
     
     tmp_pruned = {key:tmp[key] for key in sentences_to_keep}
     return tmp_pruned
@@ -325,7 +324,7 @@ def traverse(graph,nodes_PRI,cList,node,score,PRI,sentence,parent=[],parameters=
                         CCPath_score = np.mean(list(tmp.values()))
                         final_score = new_score + CCPath_score
                         if(np.isnan(final_score)):
-                            print(("NAN=",new_score, CCPath_score,tmp))
+                            print("NAN=",new_score, CCPath_score,tmp)
                         stitched_sent = stitch(c_anchor, tmp, parameters["SENTIMENT_DIFF"])
                         if(is_valid_path(stitched_sent)):
                             cList[stitched_sent] = final_score
@@ -335,7 +334,7 @@ def traverse(graph,nodes_PRI,cList,node,score,PRI,sentence,parent=[],parameters=
 def summarizer(graph,nodes_PRI,parameters=parameters):
 	# summarization algorithm
 	candidates = defaultdict(int)
-	for node, PRI in list(nodes_PRI.items()):
+	for node, PRI in nodes_PRI.items():
 	    if(is_valid_start(node,PRI,parameters["SIGMA_VSN"])):
 	        PRI = nodes_PRI[node]
 	        score = 0
@@ -396,7 +395,7 @@ def readability_score(input_string, n_grams_order = 3):
     input_string = input_string.lower()
     words = input_string.split()
     
-    k = list(range(n_grams_order-1,len(words)))
+    k = range(n_grams_order-1,len(words))
     
     probability = 1
     for kk in k:

@@ -29,13 +29,12 @@
 from opinosis import *
 import re
 import glob
-from bs4 import UnicodeDammit
 allFiles = glob.glob(r'../../data/raw/OpinosisDataset1.0_0/topics/*.data')
 
 reviews = list()
 number_of_reviews = 0
 for file_ in allFiles:
-    with open(file_,errors="surrogateescape") as f:
+    with open(file_, "r") as f:
         review = f.read().splitlines()
         reviews.append(review)
  #       try:
@@ -46,7 +45,7 @@ for file_ in allFiles:
                 clean_sentence = untag(sentence)
                 #        JP_score = joint_probability(clean_sentence)
                 #        R_score = readability_score(clean_sentence)
-                print(clean_sentence, score)
+                print clean_sentence, score
 #                number_of_reviews = number_of_reviews + 1
 #                print(number_of_reviews)
 #, JP_score, R_score"""

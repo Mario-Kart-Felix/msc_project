@@ -195,33 +195,9 @@ def stitch(c_anchor, cc, SENTIMENT_DIFF):
 	if(max_length==1):
 		joined_sentence += all_ccs[0]
 		return joined_sentence
-	#
-	#sentiments = [TextBlob(untag(the_cc)).sentiment.polarity for the_cc in all_ccs]
-	#
-	#group = KMeans(n_clusters=2)
-	#group.fit(np.array(sentiments).reshape(-1,1))
-	#groups = group.labels_
-	#groups_distance = abs(group.cluster_centers_[0]-group.cluster_centers_[1])
-	#
-	# if there are two groups of words with very different sentiment
-	# then joined them together with `but/CC`
-	#if(groups_distance>=SENTIMENT_DIFF):
-		# which group is more redundant
-		#redundancy = [np.mean(scores[groups==the_group]) for the_group in [0,1]]
-		# put in front the group with the highest average redundancy
-		#sorted_groups = np.array(sorted(zip(redundancy,[0,1]),reverse=True))[:,1]
-		#group_0_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[0]],all_ccs[groups==sorted_groups[0]]),reverse=True))[:,1])
-		#group_0_stitched = rreplace(group_0_stitched," , "," and/DT ",1)
-		#joined_sentence += group_0_stitched
-		#
-		#joined_sentence += " but/CC "
-		#
-		#group_1_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[1]],all_ccs[groups==sorted_groups[1]]),reverse=True))[:,1])
-		#group_1_stitched = rreplace(group_1_stitched," , "," and/DT ",1)
-		#joined_sentence += group_1_stitched
-	#
+	
 	# otherwise just stitch all the pieces with commas and a `and/DT` if more than three pieces
-	#else:
+
 	stitched_sentences = " , ".join(all_ccs)
 	joined_sentence += rreplace(stitched_sentences," , "," and/DT ",1)
 	#
