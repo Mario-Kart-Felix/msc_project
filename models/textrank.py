@@ -14,5 +14,5 @@ for file_ in allFiles:
         filename_search = re.search(r'[^\\/:*?"<>|\r\n]+$', file_)
         filename = filename_search.group()
         myfile = open(r'../data/processed/textrank/' + filename, 'w')
-        myfile.writelines(summarize(review, word_count = 75))
+        myfile.writelines(summarize(review, ratio=0.1))
         myfile.close()

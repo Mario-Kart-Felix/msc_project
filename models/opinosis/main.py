@@ -47,8 +47,7 @@ for file_ in allFiles:
                 #        JP_score = joint_probability(clean_sentence)
                 #        R_score = readability_score(clean_sentence)
                 print(clean_sentence, score)
-#                number_of_reviews = number_of_reviews + 1
-#                print(number_of_reviews)
+
 #, JP_score, R_score"""
 #        except:
 #                pass
