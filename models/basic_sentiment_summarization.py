@@ -19,7 +19,7 @@ def analyze_sentiment_sentiwordnet_lexicon(review, verbose=False):
     # tokenize and POS tag text tokens
     text_tokens = nltk.word_tokenize(review)
     tagged_text = nltk.pos_tag(text_tokens)
-    pos_score = neg_score = token_count = obj_score = 0
+    pos_score = neg_score = token_count = 0
     # get wordnet synsets based on POS tags
     # # get sentiment scores if synsets are found
     for word, tag in tagged_text:

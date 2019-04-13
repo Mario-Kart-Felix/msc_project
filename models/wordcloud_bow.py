@@ -49,7 +49,7 @@ for file_ in allFiles:
         
         # Initialize the cloud
         wc = WordCloud(background_color="white",
-                    max_words=2000,
+                    max_words=50,
                     width=1024,
                     height=720,
                     stopwords=stopwords.words('english'))
