@@ -13,7 +13,7 @@ import networkx
 import re
 
 def lsa_text_summarizer(documents, num_sentences=2,
-                        num_topics=2, feature_type='frequency',
+                        num_topics=1, feature_type='frequency',
                         sv_threshold=0.5):
                             
     vec, dt_matrix = build_feature_matrix(documents, 
@@ -72,12 +72,12 @@ for file_ in allFiles:
         filename_search = re.search(r'[^\\/:*?"<>|\r\n]+$', file_)
         filename = filename_search.group()
         myfile = open(r'../../data/processed/lsa/' + filename, 'w')
-        myfile.writelines(lsa_text_summarizer(norm_sentences, num_sentences=3,
-                    num_topics=5, feature_type='frequency',
+        myfile.writelines(lsa_text_summarizer(norm_sentences, num_sentences=2,
+                    num_topics=1, feature_type='frequency',
                     sv_threshold=0.5))
         myfile = open(r'../../data/processed/textrank_cosine/' + filename, 'w')
-        myfile.writelines(textrank_text_summarizer(norm_sentences, num_sentences=3,
-                         feature_type='tfidf'))
+        myfile.writelines(textrank_text_summarizer(norm_sentences, num_sentences=2,
+                         feature_type='frequency'))
         
 
 
