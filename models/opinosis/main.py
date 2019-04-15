@@ -44,16 +44,16 @@ for file_ in allFiles:
         tmp = remove_duplicates(candidates,parameters["SIGMA_SIM"])
         max_score = Counter(tmp).most_common(1)
         if max_score != []:
-                sentence, score = max_score[0]
-                clean_sentence = untag(sentence)
-                #        JP_score = joint_probability(clean_sentence)
-                #        R_score = readability_score(clean_sentence)
-                filename_search = re.search(r'[^\\/:*?"<>|\r\n]+$', file_)
-                filename = filename_search.group()
-                myfile = open(r'../../data/processed/opinosis/' + filename, 'w')
-                myfile.writelines(clean_sentence)
-                myfile.close()
-                print(clean_sentence)
+            sentence, score = max_score[0]
+            clean_sentence = untag(sentence)
+            #        JP_score = joint_probability(clean_sentence)
+            #        R_score = readability_score(clean_sentence)
+            filename_search = re.search(r'[^\\/:*?"<>|\r\n]+$', file_)
+            filename = filename_search.group()
+            myfile = open(r'../../data/processed/opinosis/' + filename, 'w')
+            myfile.writelines(clean_sentence)
+            myfile.close()
+            print(clean_sentence)
         #print(clean_sentence, score)
 
 #, JP_score, R_score"""

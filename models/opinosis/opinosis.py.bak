@@ -28,7 +28,7 @@ parameters = {
 def get_graph(reviews):
     tokenized_reviews = []
     for review in reviews:
-        review = review.decode('utf-8')
+        review = (review.encode('ascii', 'ignore')).decode("utf-8")
         tokenized_reviews.append(" ".join([word.lower()+"/"+tag for word,tag in pos_tag(word_tokenize(review))]))
     
     filename = "tagged_reviews.tmp"
@@ -263,7 +263,7 @@ def remove_duplicates(tmp,SIGMA_SIM):
         sentences_to_keep.append(sentences[similar_sentences][order][0])
         # removing the other sentence
         for sentence_to_remove in np.unique(sentences[similar_sentences][order]):
-            sentences_to_examine = list(filter(lambda x:x!=sentence_to_remove,sentences_to_examine))
+            sentences_to_examine = list([x for x in sentences_to_examine if x!=sentence_to_remove])
     
     tmp_pruned = {key:tmp[key] for key in sentences_to_keep}
     return tmp_pruned
@@ -324,7 +324,7 @@ def traverse(graph,nodes_PRI,cList,node,score,PRI,sentence,parent=[],parameters=
                         CCPath_score = np.mean(list(tmp.values()))
                         final_score = new_score + CCPath_score
                         if(np.isnan(final_score)):
-                            print("NAN=",new_score, CCPath_score,tmp)
+                            print(("NAN=",new_score, CCPath_score,tmp))
                         stitched_sent = stitch(c_anchor, tmp, parameters["SENTIMENT_DIFF"])
                         if(is_valid_path(stitched_sent)):
                             cList[stitched_sent] = final_score
@@ -334,7 +334,7 @@ def traverse(graph,nodes_PRI,cList,node,score,PRI,sentence,parent=[],parameters=
 def summarizer(graph,nodes_PRI,parameters=parameters):
 	# summarization algorithm
 	candidates = defaultdict(int)
-	for node, PRI in nodes_PRI.items():
+	for node, PRI in list(nodes_PRI.items()):
 	    if(is_valid_start(node,PRI,parameters["SIGMA_VSN"])):
 	        PRI = nodes_PRI[node]
 	        score = 0
@@ -346,90 +346,6 @@ def summarizer(graph,nodes_PRI,parameters=parameters):
 	        candidates.update(cList)
 	return candidates
 
-### CHECK IF THE REVIEWS MAKE SENSE
-### Using the Microsoft Oxford Language Model API
-
-# ---> Please use your key <---
-
-OXFORD_LANGUAGE_MODEL_ENDPOINT = "https://od-api.oxforddictionaries.com/api/v1"
-SUBSCRIPTION_KEY_NAME = ""
-DEFAULT_SUBSCRIPTION_KEY = ""
-
-def conditional_probability(query):
-    '''
-    
-    Calculate the Conditional Probability that a particular word will follow a given sequence of words
-
-    Examples:
-
-    query = {"words": "this is", "word": "sparta"}
-        
-    '''
-    data = json.dumps({"queries" : [query]})
-    headers = {SUBSCRIPTION_KEY_NAME: DEFAULT_SUBSCRIPTION_KEY,
-                "Content-Type": "application/json",
-                "Content-Length": str(len(data))}
-    #
-    params = {
-             "model" : "body",
-             "order" : 1
-            }
-    #
-    r = requests.post(OXFORD_LANGUAGE_MODEL_ENDPOINT + "calculateConditionalProbability", headers=headers,  params=params, data=data)
-    #
-    if r.status_code == 200:
-        return 10.**(r.json()["results"][0]["probability"])
-    else:
-        return 10.**-30.
-
-def readability_score(input_string, n_grams_order = 3):
-    '''
-    
-    Readability score from Eq. 4 in Ganesan et al. 2012
-    
-    
-    S_red (w_1...w_n) = 1/K * PROD_q^n P(w_k,w_{k-q+1}...w_{k-1})
-    
-    '''
-    
-    input_string = input_string.lower()
-    words = input_string.split()
-    
-    k = range(n_grams_order-1,len(words))
-    
-    probability = 1
-    for kk in k:
-        partial_probability = conditional_probability({"word": words[kk],"words": words[kk-n_grams_order+1] + " " + words[kk-n_grams_order+2]})
-        probability *= partial_probability
-    
-    return np.log2(probability) / len(k)
-
-def joint_probability(query):
-    '''
-    
-    Calculate the Conditional Probability that a particular word will follow a given sequence of words
-
-    Examples:
-
-    query = "this is sparta"
-        
-    '''
-    data = json.dumps({"queries" : [query]})
-    headers = {SUBSCRIPTION_KEY_NAME: DEFAULT_SUBSCRIPTION_KEY,
-                "Content-Type": "application/json",
-                "Content-Length": str(len(data))}
-    #
-    params = {
-             "model" : "body",
-             "order" : 1
-            }
-    #
-    r = requests.post(OXFORD_LANGUAGE_MODEL_ENDPOINT + "calculateJointProbability", headers=headers,  params=params, data=data)
-    #
-    if r.status_code == 200:
-        return r.json()["results"][0]["probability"]
-    else:
-        return -99
 
 
 

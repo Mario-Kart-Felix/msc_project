@@ -8,8 +8,6 @@ from textblob import TextBlob
 import operator
 import requests
 import json
-from sklearn.cluster import KMeans
-from bs4 import UnicodeDammit
 
 #### MODEL parameters
 
@@ -195,33 +193,10 @@ def stitch(c_anchor, cc, SENTIMENT_DIFF):
 	if(max_length==1):
 		joined_sentence += all_ccs[0]
 		return joined_sentence
-	#
-	#sentiments = [TextBlob(untag(the_cc)).sentiment.polarity for the_cc in all_ccs]
-	#
-	#group = KMeans(n_clusters=2)
-	#group.fit(np.array(sentiments).reshape(-1,1))
-	#groups = group.labels_
-	#groups_distance = abs(group.cluster_centers_[0]-group.cluster_centers_[1])
-	#
-	# if there are two groups of words with very different sentiment
-	# then joined them together with `but/CC`
-	#if(groups_distance>=SENTIMENT_DIFF):
-		# which group is more redundant
-		#redundancy = [np.mean(scores[groups==the_group]) for the_group in [0,1]]
-		# put in front the group with the highest average redundancy
-		#sorted_groups = np.array(sorted(zip(redundancy,[0,1]),reverse=True))[:,1]
-		#group_0_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[0]],all_ccs[groups==sorted_groups[0]]),reverse=True))[:,1])
-		#group_0_stitched = rreplace(group_0_stitched," , "," and/DT ",1)
-		#joined_sentence += group_0_stitched
-		#
-		#joined_sentence += " but/CC "
-		#
-		#group_1_stitched = " , ".join(np.array(sorted(zip(scores[groups==sorted_groups[1]],all_ccs[groups==sorted_groups[1]]),reverse=True))[:,1])
-		#group_1_stitched = rreplace(group_1_stitched," , "," and/DT ",1)
-		#joined_sentence += group_1_stitched
+	
 	#
 	# otherwise just stitch all the pieces with commas and a `and/DT` if more than three pieces
-	#else:
+	
 	stitched_sentences = " , ".join(all_ccs)
 	joined_sentence += rreplace(stitched_sentences," , "," and/DT ",1)
 	#
@@ -347,90 +322,6 @@ def summarizer(graph,nodes_PRI,parameters=parameters):
 	        candidates.update(cList)
 	return candidates
 
-### CHECK IF THE REVIEWS MAKE SENSE
-### Using the Microsoft Oxford Language Model API
-
-# ---> Please use your key <---
-
-OXFORD_LANGUAGE_MODEL_ENDPOINT = "https://od-api.oxforddictionaries.com/api/v1"
-SUBSCRIPTION_KEY_NAME = ""
-DEFAULT_SUBSCRIPTION_KEY = ""
-
-def conditional_probability(query):
-    '''
-    
-    Calculate the Conditional Probability that a particular word will follow a given sequence of words
-
-    Examples:
-
-    query = {"words": "this is", "word": "sparta"}
-        
-    '''
-    data = json.dumps({"queries" : [query]})
-    headers = {SUBSCRIPTION_KEY_NAME: DEFAULT_SUBSCRIPTION_KEY,
-                "Content-Type": "application/json",
-                "Content-Length": str(len(data))}
-    #
-    params = {
-             "model" : "body",
-             "order" : 1
-            }
-    #
-    r = requests.post(OXFORD_LANGUAGE_MODEL_ENDPOINT + "calculateConditionalProbability", headers=headers,  params=params, data=data)
-    #
-    if r.status_code == 200:
-        return 10.**(r.json()["results"][0]["probability"])
-    else:
-        return 10.**-30.
-
-def readability_score(input_string, n_grams_order = 3):
-    '''
-    
-    Readability score from Eq. 4 in Ganesan et al. 2012
-    
-    
-    S_red (w_1...w_n) = 1/K * PROD_q^n P(w_k,w_{k-q+1}...w_{k-1})
-    
-    '''
-    
-    input_string = input_string.lower()
-    words = input_string.split()
-    
-    k = list(range(n_grams_order-1,len(words)))
-    
-    probability = 1
-    for kk in k:
-        partial_probability = conditional_probability({"word": words[kk],"words": words[kk-n_grams_order+1] + " " + words[kk-n_grams_order+2]})
-        probability *= partial_probability
-    
-    return np.log2(probability) / len(k)
-
-def joint_probability(query):
-    '''
-    
-    Calculate the Conditional Probability that a particular word will follow a given sequence of words
-
-    Examples:
-
-    query = "this is sparta"
-        
-    '''
-    data = json.dumps({"queries" : [query]})
-    headers = {SUBSCRIPTION_KEY_NAME: DEFAULT_SUBSCRIPTION_KEY,
-                "Content-Type": "application/json",
-                "Content-Length": str(len(data))}
-    #
-    params = {
-             "model" : "body",
-             "order" : 1
-            }
-    #
-    r = requests.post(OXFORD_LANGUAGE_MODEL_ENDPOINT + "calculateJointProbability", headers=headers,  params=params, data=data)
-    #
-    if r.status_code == 200:
-        return r.json()["results"][0]["probability"]
-    else:
-        return -99
 
 
 
