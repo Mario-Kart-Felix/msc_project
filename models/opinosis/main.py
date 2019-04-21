@@ -31,7 +31,7 @@ import re
 import glob
 from bs4 import UnicodeDammit
 allFiles = glob.glob(r'../../data/raw/OpinosisDataset1.0_0/topics/*.data')
-
+print(allFiles)
 reviews = list()
 number_of_reviews = 0
 for file_ in allFiles:
@@ -43,6 +43,8 @@ for file_ in allFiles:
         candidates = summarizer(graph,nodes_PRI)
         tmp = remove_duplicates(candidates,parameters["SIGMA_SIM"])
         max_score = Counter(tmp).most_common(1)
+        print(max_score)
+        print(file_)
         if max_score != []:
             sentence, score = max_score[0]
             clean_sentence = untag(sentence)
@@ -53,7 +55,6 @@ for file_ in allFiles:
             myfile = open(r'../../data/processed/opinosis/' + filename, 'w')
             myfile.writelines(clean_sentence)
             myfile.close()
-            print(clean_sentence)
         #print(clean_sentence, score)
 
 #, JP_score, R_score"""

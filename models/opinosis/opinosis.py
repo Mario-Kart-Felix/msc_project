@@ -4,23 +4,23 @@ import networkx as nx
 import numpy as np
 from collections import defaultdict, Counter
 import re
-from textblob import TextBlob
 import operator
 import requests
 import json
+import pdb
 
 #### MODEL parameters
 
 parameters = {
 "SIGMA_VSN": 15,
-"SIGMA_R": 5,
-"GAP": 4,
+"SIGMA_R": 2,
+"GAP": 3,
 "SIGMA_SIM": 0.3,
 "MAX_SENTENCE_LENGTH": 15,
 "NNEIGH": 7,
-"OUT_CNN": 10,
-"SENTIMENT_DIFF": 0.2
+"OUT_CNN": 10
 }
+
 
 ####
 
@@ -183,7 +183,7 @@ def rreplace(s, old, new, occurrence):
 # 1) join the sentences ordered by score
 # 2) sentences are connected based on their sentiment
 
-def stitch(c_anchor, cc, SENTIMENT_DIFF):
+def stitch(c_anchor, cc):
 	joined_sentence = " ".join(c_anchor)+" "
 	#
 	dummy = np.array(sorted([(key,score) for key, score in list(cc.items())],key=operator.itemgetter(1),reverse=True))
@@ -195,7 +195,7 @@ def stitch(c_anchor, cc, SENTIMENT_DIFF):
 		return joined_sentence
 	
 	#
-	# otherwise just stitch all the pieces with commas and a `and/DT` if more than three pieces
+	# stitch all the pieces with commas and a `and/DT` if more than three pieces
 	
 	stitched_sentences = " , ".join(all_ccs)
 	joined_sentence += rreplace(stitched_sentences," , "," and/DT ",1)
@@ -301,7 +301,7 @@ def traverse(graph,nodes_PRI,cList,node,score,PRI,sentence,parent=[],parameters=
                         final_score = new_score + CCPath_score
                         if(np.isnan(final_score)):
                             print(("NAN=",new_score, CCPath_score,tmp))
-                        stitched_sent = stitch(c_anchor, tmp, parameters["SENTIMENT_DIFF"])
+                        stitched_sent = stitch(c_anchor, tmp)
                         if(is_valid_path(stitched_sent)):
                             cList[stitched_sent] = final_score
             else:
