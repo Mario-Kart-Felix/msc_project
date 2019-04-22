@@ -43,8 +43,6 @@ for file_ in allFiles:
         candidates = summarizer(graph,nodes_PRI)
         tmp = remove_duplicates(candidates,parameters["SIGMA_SIM"])
         max_score = Counter(tmp).most_common(1)
-        print(max_score)
-        print(file_)
         if max_score != []:
             sentence, score = max_score[0]
             clean_sentence = untag(sentence)
