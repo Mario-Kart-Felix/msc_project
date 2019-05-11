@@ -64,7 +64,7 @@ def calculate_pagerank(binary_cosine_matrix, d):
     return pr
 
 
-def lexrank(documents, t=0.1, d=0.5):
+def lexrank(documents, t=0.1, d=0.15):
     #input text
     documents = np.array(documents)
     #PROCESS
