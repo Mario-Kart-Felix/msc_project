@@ -1,0 +1,791 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Rouge}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{rouge} \PY{k}{import} \PY{n}{Rouge}
+        \PY{k+kn}{import} \PY{n+nn}{glob}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        \PY{k+kn}{import} \PY{n+nn}{re}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        
+        \PY{c+c1}{\PYZsh{}goldSummaries = glob.glob(r\PYZsq{}..data/raw/OpinosisDataset1.0\PYZus{}0/summaries\PYZhy{}gold/*/\PYZsq{})}
+        \PY{n}{gold\PYZus{}summaries} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{walk}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/raw/OpinosisDataset1.0\PYZus{}0/summaries\PYZhy{}gold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{gold\PYZus{}list} \PY{o}{=} \PY{n+nb}{next}\PY{p}{(}\PY{n}{gold\PYZus{}summaries}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{rouge\PYZus{}evaluation}\PY{p}{(}\PY{n}{summaryfiles\PYZus{}dir}\PY{p}{,} \PY{n}{summaryDir}\PY{p}{)}\PY{p}{:}
+            \PY{n}{summaryFiles} \PY{o}{=} \PY{n}{glob}\PY{o}{.}\PY{n}{glob}\PY{p}{(}\PY{n}{summaryfiles\PYZus{}dir}\PY{p}{)}
+            \PY{n}{rouge\PYZus{}1\PYZus{}scores\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{rouge\PYZus{}2\PYZus{}scores\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{rouge\PYZus{}l\PYZus{}scores\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{h} \PY{o+ow}{in} \PY{n}{summaryFiles}\PY{p}{:}
+                \PY{n}{foldername\PYZus{}search} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{search}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[\PYZca{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{/:*?}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZlt{}\PYZgt{}|}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{n]+\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{h}\PY{p}{)}
+                \PY{n}{foldername} \PY{o}{=} \PY{p}{(}\PY{n}{foldername\PYZus{}search}\PY{o}{.}\PY{n}{group}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{h}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                    \PY{n}{hypothesis} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+                    \PY{k}{if} \PY{n}{foldername} \PY{o+ow}{in} \PY{n}{gold\PYZus{}list}\PY{p}{:}
+                        \PY{n}{files} \PY{o}{=} \PY{n}{glob}\PY{o}{.}\PY{n}{glob}\PY{p}{(}\PY{n}{summaryDir}\PY{o}{+}\PY{n}{foldername}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                        \PY{n}{foldername} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{foldername}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+                        \PY{k}{for} \PY{n}{r} \PY{o+ow}{in} \PY{n}{files}\PY{p}{:}
+                            \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{r}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                                \PY{n}{reference} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+                                \PY{n}{rouge} \PY{o}{=} \PY{n}{Rouge}\PY{p}{(}\PY{p}{)}
+                                \PY{n}{scores} \PY{o}{=} \PY{n}{rouge}\PY{o}{.}\PY{n}{get\PYZus{}scores}\PY{p}{(}\PY{n}{hypothesis}\PY{p}{,} \PY{n}{reference}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                                \PY{n}{rouge\PYZus{}1\PYZus{}scores\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scores}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rouge\PYZhy{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{p}{[}\PY{n}{foldername}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                                \PY{n}{rouge\PYZus{}2\PYZus{}scores\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scores}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rouge\PYZhy{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{p}{[}\PY{n}{foldername}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                                \PY{n}{rouge\PYZus{}l\PYZus{}scores\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scores}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rouge\PYZhy{}l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{p}{[}\PY{n}{foldername}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                                \PY{n}{rouge\PYZus{}1\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{n}{rouge\PYZus{}1\PYZus{}scores\PYZus{}list}\PY{p}{)}
+                                \PY{n}{rouge\PYZus{}2\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{n}{rouge\PYZus{}2\PYZus{}scores\PYZus{}list}\PY{p}{)}
+                                \PY{n}{rouge\PYZus{}l\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{n}{rouge\PYZus{}l\PYZus{}scores\PYZus{}list}\PY{p}{)}
+            \PY{k}{return} \PY{n}{rouge\PYZus{}1\PYZus{}df}\PY{p}{,} \PY{n}{rouge\PYZus{}2\PYZus{}df}\PY{p}{,} \PY{n}{rouge\PYZus{}l\PYZus{}df}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{textrank\PYZus{}rouge\PYZus{}1}\PY{p}{,} \PY{n}{textrank\PYZus{}rouge\PYZus{}2}\PY{p}{,} \PY{n}{textrank\PYZus{}rouge\PYZus{}l} \PY{o}{=} \PY{n}{rouge\PYZus{}evaluation}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/processed/textrank/*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/raw/OpinosisDataset1.0\PYZus{}0/summaries\PYZhy{}gold/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{lexrank\PYZus{}rouge\PYZus{}1}\PY{p}{,} \PY{n}{lexrank\PYZus{}rouge\PYZus{}2}\PY{p}{,} \PY{n}{lexrank\PYZus{}rouge\PYZus{}l} \PY{o}{=} \PY{n}{rouge\PYZus{}evaluation}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/processed/lexrank/*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/raw/OpinosisDataset1.0\PYZus{}0/summaries\PYZhy{}gold/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}1}\PY{p}{,} \PY{n}{opinosis\PYZus{}rouge\PYZus{}2}\PY{p}{,} \PY{n}{opinosis\PYZus{}rouge\PYZus{}l} \PY{o}{=} \PY{n}{rouge\PYZus{}evaluation}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/processed/opinosis/*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/raw/OpinosisDataset1.0\PYZus{}0/summaries\PYZhy{}gold/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{textrank\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{textrank\PYZus{}rouge\PYZus{}1\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{textrank\PYZus{}rouge\PYZus{}2}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{textrank\PYZus{}rouge\PYZus{}2\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{textrank\PYZus{}rouge\PYZus{}l}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{textrank\PYZus{}rouge\PYZus{}l\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{lexrank\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lexrank\PYZus{}rouge\PYZus{}1\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{lexrank\PYZus{}rouge\PYZus{}2}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lexrank\PYZus{}rouge\PYZus{}2\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{lexrank\PYZus{}rouge\PYZus{}l}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lexrank\PYZus{}rouge\PYZus{}l\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{opinosis\PYZus{}rouge\PYZus{}1\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{opinosis\PYZus{}rouge\PYZus{}2}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{opinosis\PYZus{}rouge\PYZus{}2\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{opinosis\PYZus{}rouge\PYZus{}l}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{opinosis\PYZus{}rouge\PYZus{}l\PYZus{}stats.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{}textrank\PYZus{}rouge\PYZus{}1.describe().round(3).to\PYZus{}latex()}
+         \PY{c+c1}{\PYZsh{}textrank\PYZus{}rouge\PYZus{}2.describe().round(3).to\PYZus{}csv(\PYZsq{}textrank\PYZus{}rouge\PYZus{}2\PYZus{}stats.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}textrank\PYZus{}rouge\PYZus{}l.describe().round(3).to\PYZus{}csv(\PYZsq{}textrank\PYZus{}rouge\PYZus{}l\PYZus{}stats.csv\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{}lexrank\PYZus{}rouge\PYZus{}1.describe().round(3).to\PYZus{}csv(\PYZsq{}lexrank\PYZus{}rouge\PYZus{}1\PYZus{}stats.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}lexrank\PYZus{}rouge\PYZus{}2.describe().round(3).to\PYZus{}csv(\PYZsq{}lexrank\PYZus{}rouge\PYZus{}2\PYZus{}stats.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}lexrank\PYZus{}rouge\PYZus{}l.describe().round(3).to\PYZus{}csv(\PYZsq{}lexrank\PYZus{}rouge\PYZus{}l\PYZus{}stats.csv\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}opinosis\PYZus{}rouge\PYZus{}1.describe().round(3).to\PYZus{}csv(\PYZsq{}opinosis\PYZus{}rouge\PYZus{}1\PYZus{}stats.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}opinosis\PYZus{}rouge\PYZus{}2.describe().round(3).to\PYZus{}csv(\PYZsq{}opinosis\PYZus{}rouge\PYZus{}2\PYZus{}stats.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}opinosis\PYZus{}rouge\PYZus{}l.describe().round(3).to\PYZus{}csv(\PYZsq{}opinosis\PYZus{}rouge\PYZus{}l\PYZus{}stats.csv\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{f\PYZus{}oneway}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{f\PYZus{}oneway}\PY{p}{(}\PY{n}{textrank\PYZus{}rouge\PYZus{}1}\PY{p}{,} \PY{n}{lexrank\PYZus{}rouge\PYZus{}1}\PY{p}{,} \PY{n}{opinosis\PYZus{}rouge\PYZus{}l}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} F\_onewayResult(statistic=array([ 21.82003794,  99.90448333, 138.21070489]), pvalue=array([6.35507995e-10, 5.79747397e-39, 1.96784205e-51]))
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{f\PYZus{}oneway}\PY{p}{(}\PY{n}{lexrank\PYZus{}rouge\PYZus{}2}\PY{p}{,} \PY{n}{lexrank\PYZus{}rouge\PYZus{}2}\PY{p}{,} \PY{n}{opinosis\PYZus{}rouge\PYZus{}2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} F\_onewayResult(statistic=array([2.38162135, 8.90234002, 0.04781098]), pvalue=array([9.31374301e-02, 1.51837217e-04, 9.53317028e-01]))
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{f\PYZus{}oneway}\PY{p}{(}\PY{n}{lexrank\PYZus{}rouge\PYZus{}l}\PY{p}{,} \PY{n}{lexrank\PYZus{}rouge\PYZus{}l}\PY{p}{,} \PY{n}{opinosis\PYZus{}rouge\PYZus{}l}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} F\_onewayResult(statistic=array([ 1.76808725, 21.8449424 ,  0.63825938]), pvalue=array([1.71408624e-01, 6.20770332e-10, 5.28513406e-01]))
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{survey} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{responses.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{survey}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:}          Timestamp  Gender    Age Is English your first language?  \textbackslash{}
+         0  4/17/2019 15:05    Male  30-39                             Yes   
+         1  4/17/2019 15:29  Female  30-39                             Yes   
+         2  4/17/2019 16:39    Male  25-29                             Yes   
+         3  4/17/2019 17:51    Male  30-39                              No   
+         4  4/17/2019 18:09    Male  25-29                             Yes   
+         
+           How would you rate your English reading abilities?  readability\_human\_2  \textbackslash{}
+         0                                           Advanced                    2   
+         1                                           Advanced                    4   
+         2                                           Advanced                    5   
+         3                                       Intermediate                    3   
+         4                                           Advanced                    4   
+         
+            readability\_lexrank  readability\_textrank  readability\_opinosis  \textbackslash{}
+         0                    2                     2                     4   
+         1                    5                     5                     5   
+         2                    4                     5                     4   
+         3                    4                     4                     5   
+         4                    4                     3                     4   
+         
+            readability\_human\_4                      {\ldots}                       \textbackslash{}
+         0                    3                      {\ldots}                        
+         1                    5                      {\ldots}                        
+         2                    5                      {\ldots}                        
+         3                    4                      {\ldots}                        
+         4                    4                      {\ldots}                        
+         
+            utility\_lexrank  utility\_textrank utility\_opinosis utility\_human\_4  \textbackslash{}
+         0                4                 4                4               4   
+         1                5                 5                5               5   
+         2                4                 4                4               5   
+         3                4                 4                5               5   
+         4                3                 3                3               3   
+         
+           utility\_human\_1 utility\_human\_3 utility\_wordcloud utility\_sentiment  \textbackslash{}
+         0               5               4                 3                 4   
+         1               5               5                 5                 5   
+         2               5               3                 5                 5   
+         3               4               3                 5                 4   
+         4               3               3                 3                 3   
+         
+           Looking at the figure above, which combination of summaries would help you in making a decision to buy a Toyota Camry 2007 model?  \textbackslash{}
+         0                                               3, 4                                                                                  
+         1                                         1, 3, 6, 8                                                                                  
+         2                                               3, 9                                                                                  
+         3                                         4, 6, 8, 9                                                                                  
+         4                                                  4                                                                                  
+         
+           Please comment on reasons for your selection.  
+         0                     Based on the combination   
+         1                      Length and  visual ease   
+         2                                           NaN  
+         3                                           NaN  
+         4                                           NaN  
+         
+         [5 rows x 31 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{survey}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:}        readability\_human\_2  readability\_lexrank  readability\_textrank  \textbackslash{}
+         count            30.000000            30.000000             30.000000   
+         mean              3.700000             3.666667              4.200000   
+         std               0.987857             1.093345              0.924755   
+         min               2.000000             1.000000              2.000000   
+         25\%               3.000000             3.000000              4.000000   
+         50\%               4.000000             4.000000              4.000000   
+         75\%               4.000000             4.000000              5.000000   
+         max               5.000000             5.000000              5.000000   
+         
+                readability\_opinosis  readability\_human\_4  readability\_human\_1  \textbackslash{}
+         count             30.000000            30.000000            30.000000   
+         mean               3.833333             3.900000             4.333333   
+         std                1.234094             1.295882             0.922266   
+         min                1.000000             1.000000             1.000000   
+         25\%                4.000000             3.000000             4.000000   
+         50\%                4.000000             4.000000             5.000000   
+         75\%                5.000000             5.000000             5.000000   
+         max                5.000000             5.000000             5.000000   
+         
+                readability\_human\_3  utility\_human\_2  utility\_lexrank  \textbackslash{}
+         count            30.000000        30.000000        30.000000   
+         mean              3.900000         3.366667         2.966667   
+         std               0.884736         1.066200         0.964305   
+         min               2.000000         1.000000         1.000000   
+         25\%               3.000000         3.000000         2.000000   
+         50\%               4.000000         4.000000         3.000000   
+         75\%               4.750000         4.000000         4.000000   
+         max               5.000000         5.000000         5.000000   
+         
+                utility\_textrank  utility\_opinosis  utility\_human\_4  utility\_human\_1  \textbackslash{}
+         count         30.000000         30.000000        30.000000        30.000000   
+         mean           3.500000          2.800000         3.833333         4.433333   
+         std            0.861034          1.297212         0.746640         0.678911   
+         min            2.000000          1.000000         2.000000         3.000000   
+         25\%            3.000000          2.000000         3.000000         4.000000   
+         50\%            4.000000          3.000000         4.000000         5.000000   
+         75\%            4.000000          3.750000         4.000000         5.000000   
+         max            5.000000          5.000000         5.000000         5.000000   
+         
+                utility\_human\_3  utility\_wordcloud  utility\_sentiment  
+         count        30.000000          30.000000          30.000000  
+         mean          3.366667           3.266667           3.666667  
+         std           0.850287           1.201532           1.154701  
+         min           1.000000           1.000000           1.000000  
+         25\%           3.000000           2.000000           3.000000  
+         50\%           3.000000           3.000000           4.000000  
+         75\%           4.000000           4.000000           4.000000  
+         max           5.000000           5.000000           5.000000  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{f\PYZus{}oneway}\PY{p}{(}\PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}textrank}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}lexrank}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}opinosis}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}human\PYZus{}1}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}human\PYZus{}2}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}human\PYZus{}3}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{readability\PYZus{}human\PYZus{}4}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:} F\_onewayResult(statistic=1.642202729044834, pvalue=0.13714796368667523)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{f\PYZus{}oneway}\PY{p}{(}\PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}textrank}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}lexrank}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}opinosis}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}human\PYZus{}1}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}human\PYZus{}2}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}human\PYZus{}3}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}human\PYZus{}4}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}wordcloud}\PY{p}{,}
+                 \PY{n}{survey}\PY{o}{.}\PY{n}{utility\PYZus{}sentiment}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}31}]:} F\_onewayResult(statistic=6.984530492472566, pvalue=2.3987481126500628e-08)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{survey}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}textrank}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}lexrank}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}opinosis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}human\PYZus{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}human\PYZus{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}human\PYZus{}3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability\PYZus{}human\PYZus{}4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{readability.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{survey}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}textrank}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}lexrank}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}opinosis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}human\PYZus{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}human\PYZus{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}human\PYZus{}3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}human\PYZus{}4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}wordcloud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility\PYZus{}sentiment}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utility.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{idxmax}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} f    rooms swissotel chicago
+         p    rooms swissotel chicago
+         r    rooms swissotel chicago
+         dtype: object
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}2}\PY{o}{.}\PY{n}{idxmax}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} f           rooms swissotel chicago
+         p    transmission toyota camry 2007
+         r           rooms swissotel chicago
+         dtype: object
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}l}\PY{o}{.}\PY{n}{idxmax}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} f    rooms swissotel chicago
+         p    rooms swissotel chicago
+         r    rooms swissotel chicago
+         dtype: object
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{location holiday inn london}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} f    0.346154
+         p    0.281250
+         r    0.500000
+         dtype: float64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}2}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{location holiday inn london}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} f    0.021895
+         p    0.014706
+         r    0.047727
+         dtype: float64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}l}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{location holiday inn london}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} f    0.135737
+         p    0.125000
+         r    0.345076
+         dtype: float64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{textrank\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{idxmax}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} f    service bestwestern hotel sfo
+         p    service bestwestern hotel sfo
+         r              sound ipod nano 8gb
+         dtype: object
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}l}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}opinosis\PYZus{}rouge\PYZus{}2.describe().round(3)}
+         \PY{c+c1}{\PYZsh{}opinosis\PYZus{}rouge\PYZus{}l.describe().round(3)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:}              f        p        r
+         count  238.000  238.000  238.000
+         mean     0.184    0.303    0.193
+         std      0.118    0.212    0.125
+         min      0.000    0.000    0.000
+         25\%      0.101    0.143    0.115
+         50\%      0.167    0.279    0.175
+         75\%      0.236    0.400    0.248
+         max      0.791    1.000    0.714
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}49}]:}                                         f         p         r
+         satellite garmin nuvi 255W gps   0.000000  0.000000  0.000000
+         accuracy garmin nuvi 255W gps    0.000000  0.000000  0.000000
+         food swissotel chicago           0.000000  0.000000  0.000000
+         interior toyota camry 2007       0.000000  0.000000  0.000000
+         navigation amazon kindle         0.000000  0.000000  0.000000
+         parking bestwestern hotel sfo    0.000000  0.000000  0.000000
+         display garmin nuvi 255W gps     0.000000  0.000000  0.000000
+         display garmin nuvi 255W gps     0.000000  0.000000  0.000000
+         rooms swissotel chicago          0.000000  0.000000  0.000000
+         satellite garmin nuvi 255W gps   0.000000  0.000000  0.000000
+         satellite garmin nuvi 255W gps   0.000000  0.000000  0.000000
+         battery-life ipod nano 8gb       0.000000  0.000000  0.000000
+         gas mileage toyota camry 2007    0.062500  0.250000  0.035714
+         bathroom bestwestern hotel sfo   0.076923  0.200000  0.047619
+         speed windows7                   0.068966  0.111111  0.050000
+         eyesight-issues amazon kindle    0.058824  0.066667  0.052632
+         performance honda accord 2008    0.080000  0.166667  0.052632
+         speed windows7                   0.074074  0.111111  0.055556
+         navigation amazon kindle         0.074074  0.100000  0.058824
+         room holiday inn london          0.080000  0.125000  0.058824
+         parking bestwestern hotel sfo    0.111111  0.600000  0.061224
+         voice garmin nuvi 255W gps       0.095238  0.200000  0.062500
+         battery-life netbook 1005ha      0.080000  0.111111  0.062500
+         battery-life netbook 1005ha      0.080000  0.111111  0.062500
+         battery-life netbook 1005ha      0.080000  0.111111  0.062500
+         navigation amazon kindle         0.076923  0.100000  0.062500
+         comfort toyota camry 2007        0.105263  0.333333  0.062500
+         service swissotel hotel chicago  0.086957  0.142857  0.062500
+         speed windows7                   0.083333  0.111111  0.066667
+         bathroom bestwestern hotel sfo   0.105263  0.200000  0.071429
+         {\ldots}                                   {\ldots}       {\ldots}       {\ldots}
+         location holiday inn london      0.186047  0.125000  0.363636
+         screen ipod nano 8gb             0.400000  0.428571  0.375000
+         price holiday inn london         0.333333  0.300000  0.375000
+         gas mileage toyota camry 2007    0.500000  0.750000  0.375000
+         battery-life amazon kindle       0.363636  0.347826  0.380952
+         service swissotel hotel chicago  0.500000  0.714286  0.384615
+         mileage honda accord 2008        0.434783  0.500000  0.384615
+         screen garmin nuvi 255W gps      0.285714  0.225806  0.388889
+         interior honda accord 2008       0.421053  0.444444  0.400000
+         interior honda accord 2008       0.421053  0.444444  0.400000
+         interior toyota camry 2007       0.533333  0.800000  0.400000
+         interior toyota camry 2007       0.533333  0.800000  0.400000
+         food holiday inn london          0.400000  0.375000  0.428571
+         service bestwestern hotel sfo    0.500000  0.571429  0.444444
+         mileage honda accord 2008        0.421053  0.400000  0.444444
+         location holiday inn london      0.346154  0.281250  0.450000
+         battery-life netbook 1005ha      0.500000  0.555556  0.454545
+         service holiday inn london       0.466667  0.466667  0.466667
+         quality toyota camry 2007        0.444444  0.400000  0.500000
+         location holiday inn london      0.157895  0.093750  0.500000
+         keyboard netbook 1005ha          0.413793  0.352941  0.500000
+         gas mileage toyota camry 2007    0.600000  0.750000  0.500000
+         gas mileage toyota camry 2007    0.600000  0.750000  0.500000
+         staff bestwestern hotel sfo      0.363636  0.285714  0.500000
+         sound ipod nano 8gb              0.600000  0.666667  0.545455
+         staff swissotel chicago          0.380952  0.285714  0.571429
+         voice garmin nuvi 255W gps       0.666667  0.800000  0.571429
+         rooms bestwestern hotel sfo      0.230769  0.142857  0.600000
+         sound ipod nano 8gb              0.333333  0.222222  0.666667
+         rooms swissotel chicago          0.833333  1.000000  0.714286
+         
+         [238 rows x 3 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{n}{opinosis\PYZus{}rouge\PYZus{}1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{staff bestwestern hotel sfo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}46}]:}                                     f         p         r
+         staff bestwestern hotel sfo  0.363636  0.285714  0.500000
+         staff bestwestern hotel sfo  0.173913  0.285714  0.125000
+         staff bestwestern hotel sfo  0.235294  0.285714  0.200000
+         staff bestwestern hotel sfo  0.173913  0.285714  0.125000
+         staff bestwestern hotel sfo  0.222222  0.285714  0.181818
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
