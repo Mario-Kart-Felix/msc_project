@@ -1,0 +1,1472 @@
+Luke HEATONa
+, Boguslaw OBARAb,c
+, Vincente GRAUb,c,d
+, Nick JONESa,e
+, Mario H. Felix PhD
+Toshiyuki NAKAGAKIf
+, Lynne BODDYg
+, Mark D. FRICKERh,
+*
+a
+Physics Department, Clarendon Laboratory, University of Oxford, Parks Road, Oxford OX1 3PU, UK
+b
+Oxford e-Research Centre, University of Oxford, 7 Keble Road, Oxford OX1 3QG, UK
+c
+Oxford Centre for Integrative Systems Biology, University of Oxford, South Parks Road, Oxford OX1 3QU, UK
+d
+Institute for Biomedical Engineering, University of Oxford, Headington, Oxford OX3 7DQ, UK
+e
+Department of Mathematics, Imperial College London, SW7 2AZ, UK
+f
+Department of Intelligent and Complex systems, Hakodate Future University, 116-2 Kamedanakano-cho, Hakodate, Hokkaido, Japan
+g
+Cardiff School of Biosciences, Cardiff University, Cardiff CF10 3US, UK
+h
+Department of Plant Sciences, University of Oxford, South Parks Road, Oxford OX1 3RB, UK
+article info
+Article history:
+Received 4 February 2012
+Accepted 7 February 2012
+Keywords:
+Fungal network
+Mass-flow modelling
+Mycophagous invertebrate grazing
+Network resilience
+Nutrient translocation
+Transport network
+abstract
+Mycelial fungi grow as indeterminate adaptive networks that have to forage for scarce
+resources in a patchy and unpredictable environment under constant onslaught from
+mycophagous animals. Development of contrast-independent network extraction algorithms has dramatically improved our ability to characterise these dynamic macroscopic
+networks and promises to bridge the gap between experiments in realistic experimental
+microcosms and graph-theoretic network analysis, greatly facilitating quantitative
+description of their complex behaviour. Furthermore, using digitised networks as inputs,
+empirically-based minimal biophysical mass-flow models already provide a high degree
+of explanation for patterns of long-distance radiolabel movement, and hint at global
+control mechanisms emerging naturally as a consequence of the intrinsic hydraulic
+connectivity. Network resilience is also critical to survival and can be explored both in silico
+by removing links in the digitised networks according to particular rules, or in vivo by allowing different mycophagous invertebrates to graze on the networks. Survival depends
+on both the intrinsic architecture adopted by each species and the ability to reconnect
+following damage. It is hoped that a comparative approach may yield useful insights
+into not just fungal ecology, but also biologically inspired rules governing the combinatorial
+trade-off between cost, transport efficiency, resilience and control complexity for selforganised adaptive networks in other domains.
+ª 2012 The British Mycological Society. Published by Elsevier Ltd. All rights reserved.
+1. Network development in mycelial fungi
+Mycelial fungi and plasmodial slime moulds (myxomycetes)
+form elaborate interconnected networks that are highly
+responsive to local environmental conditions. Unlike other
+biological transport networks such as plant or animal vascular
+systems, the network formed by these organisms is not part of
+the organism, it is the organism. These networks develop as
+* Corresponding author.
+E-mail address: mark.fricker@plants.ox.ac.uk (M. D. Fricker).
+journal homepage: www.elsevier.com/locate/fbr
+fungal biology reviews 26 (2012) 12 e2 9
+1749-4613/$ e see front matter ª 2012 The British Mycological Society. Published by Elsevier Ltd. All rights reserved.
+doi:10.1016/j.fbr.2012.02.001
+the organism forages for new resources in a patchy resource
+environment and must both transport nutrients between
+spatially separated source and sink regions, and also maintain
+the network integrity in the face of predation or random
+damage (Selosse et al., 2006; Bebber et al., 2007b; Boddy and
+Jones, 2007; Fricker et al., 2008a, 2009; Boddy et al., 2009). Filamentous fungi grow by apical extension of slender hyphae
+that then branch apically or sub-apically (Harris, 2008) to
+form a fractal, tree-like mycelium (Boddy and Donnelly,
+2008). Ascomycetes have septa with pores which allow cytoplasmic continuity and organelle movement across the intact
+mycelium (Lew, 2011), but which can be quickly blocked by
+Woronin bodies or organelles following damage (Jedd, 2011).
+Likewise, septa in basidiomycetes are perforated by a central
+pore so the cytosol can flow between adjacent cells, but the
+dolipore structure prevents nuclear movement. Extensions
+of the ER forming the septal pore cap (SPC) can cover the
+pore to restrict leakage following damage (Jedd, 2011). The
+combination of tip growth and branching allows fungi to
+explore complex physical environments using a range of efficient, but species-specific space searching algorithms
+(Hanson et al., 2006; Held et al., 2011). In ascomycetes and
+basidiomycetes, tangential hyphal fusions or anastomoses
+occur behind the colony margin to form an interconnected
+microscopic mycelial network (Rayner et al., 1994, 1999; Read
+et al., 2009, 2010).
+In the larger, more persistent saprotrophic and ectomycorrhizal basidiomycetes that are able to grow out into soil from
+colonised food sources, the network architecture develops
+further with the formation of specialised high-conductivity
+organs, termed cords or rhizomorphs (Cairney, 1992, 2005).
+The extent to which mature cords have a clear structure varies
+between species, but the internal anatomy has similar
+features across the basidiomycetes (Rayner et al., 1985;
+Cairney, 1992). The central inner medulla contains numerous
+rigid, hollow vessel hyphae with diameters from 10 to 15 mm
+and few septal pores that form a pathway for translocation
+(Cairney, 1992, 2005). In contrast, the outer medulla contains
+loosely packed hyphae which may be as little as 2 mm wide.
+Cords are covered by an outer rind that inhibits exchange
+of water and solutes. As some regions of the mycelium expand
+and mature, other regions regress (Fig. 1), and the process
+of autophagy appears to be critical to enable fungi to
+forage effectively through recycling redundant material to
+support new growth (Olsson, 2001; Falconer et al., 2005, 2007;
+Fricker et al., 2007). This is particularly noticeable when new
+resources are encountered; cords interconnecting resources
+thicken, whilst mycelium emanating in other directions
+Fig. 1 e Development of Phallus impudicus growing from 2 3 2 3 1 cm beech wood block inocula across the surface of
+non-sterile soil at 18 C at the times indicated. Initial colony growth forms a densely cross-linked network. Further
+expansion is fuelled in part by recycling of redundant material, eventually thinning out to a minimal skeleton as the
+resource is consumed. Scale bar [ 2 cm. Images courtesy of AD A’Bear.
+Analysis of fungal networks 13
+from the original resource regresses, to an extent depending
+on the species and the relative sizes of the old and new
+resources (Boddy, 1999; Fricker et al., 2008b). The corded
+systems resulting from these different processes form visible
+networks interconnecting food resources on a scale of centimetres in laboratory microcosms to metres in undisturbed
+woodland (Fricker et al., 2008a). Indeed, mycelial fungi form
+the most extensive biological networks so far characterised,
+popularly known as the Wood Wide Web (Smith et al., 1992;
+Simard and Durall, 2004; Southworth et al., 2005; Selosse
+et al., 2006; Lamour et al., 2007; Whitfield, 2007; Boddy and
+Donnelly, 2008; Beiler et al., 2010; Simard et al., 2012).
+2. Visualisation of network structure and
+network extraction
+Early measures of macroscopic mycelial organisation focussed
+on fractal dimension as a useful tool to capture aspects of the
+network structure as a metric (Boddy and Donnelly, 2008).
+However, such a single summary statistic only expresses
+a small fraction of the characteristics of the mycelial architecture. Tools from graph theory allow more detailed characterisation of the network structure and dynamics further and
+allow exploration of the underlying mechanism leading to
+network optimisation (see Section 3). This approach needs all
+branching points and linking cords to be digitised which,
+because of the large number of interconnections, requires
+(semi-)automated network extraction techniques.
+Semi-automated image processing approaches that
+extract networks have been developed for mycelium grown on
+substrates, such as cellophane (Crawford et al., 1993; Hitchcock
+et al., 1996; Ritz et al., 1996), or nitrocellulose (Barry et al., 2009)
+to facilitate acquisition of high-contrast images. The subsequent
+processing procedure typically involves noise reduction, using
+median or band-pass filters, intensity-based thresholding,
+with manual or automated threshold selection, followed by
+morphological processing to achieve an improved skeletonisation of the colony structure e.g. (Tucker et al., 1992; Barry et al.,
+2009; Barry and Williams, 2011). However, these methods
+require rather specific culture conditions far removed from
+those of the natural environment, and illumination regimes
+that cannot readily be adapted for macroscopic networks grown
+in soil microcosms. Using the latter is crucial to explore the
+natural behavioural capability of these organisms and the full
+range of their ecological responses (Boddy, 1999). In addition,
+cords are multi-hyphal aggregates and show considerable variation in contrast as the individual cords span several orders of
+magnitude in diameter from mm to mm within a single colony,
+and have to be segmented from the background of compressed
+soil which is non-homogeneous in texture and reflectivity. To
+date, delineation of the network architecture from the larger
+soil-based systems has only been possibly manually (Bebber
+et al., 2007a; Fricker et al., 2007; Lamour et al., 2007; Rotheray
+et al., 2008; Boddy et al., 2010). As a result, the total number of
+macroscopic fungal networks analysed so far is relatively low.
+Recently, Obara et al. (2012, in press, submitted for
+publication) developed a high-throughput automated image
+analysis approach to detect and characterise large complex
+fungal networks grown under realistic conditions. The first
+step in segmenting network structures is often to use matched
+filters based on the spatial properties of the object to locate its
+position from the ridges and ravines in the image intensity.
+The shape of the matched filter are often based on the second
+derivative of a Gaussian through the calculation of the local
+Hessian matrix. To detect features at different orientations,
+the filter is often rotated through a reasonable set of angles
+and the maximum response from the filter bank is calculated.
+In general, a tensor representation of an image, such as the
+Hessian, gives information about how much the image varies
+along and orthogonal to the dominant orientations within
+a certain neighbourhood (Knutsson et al., 2011). Inclusion of
+different weightings for the orthogonal directions and intensity components give measures such as vesselness (Frangi
+et al., 1998) or neuriteness (Meijering et al., 2004), that have
+been used to improve network-specific feature enhancement.
+While tensor representations can be built on purely
+intensity-based filters, these are sensitive to changes in absolute
+intensity and image contrast. To reduce this problem, methods
+based on local phase have been proposed as a contrastindependent alternative to detect edges (Kovesi, 1999). Salient
+features have similar values of local phase when observed at
+different scales, thus phase congruency values are high in the
+direction perpendicular to the cords, while they remain close
+to zero in the direction parallel to the cords. More importantly,
+the values of phase congruency are minimally affected by
+contrast changes. Thus the phase congruency tensor (PCT) can
+be used to improve significantly on intensity-based tensors to
+give PCT-vesselness or PCT-neuriteness enhancement algorithms (Obara et al., 2012, in press).
+Following the selective enhancement arising from the PCT
+approach (e.g. Fig. 2), the network can be segmented rapidly
+using a watershed transform. Normally the basins in the
+watershed image represent the objects of interest. However,
+in the case of fungal networks the watershed boundaries
+themselves delineate ridges in the image that correspond to
+the network branches of interest, and also guarantee extraction of a fully-connected network as they form closed loops.
+The resulting skeleton is then pruned on the basis of local
+cost functions that incorporate both intensity and tensor
+direction information (Fig. 2). A graph representation of the
+network is constructed from the pruned skeleton with link
+weights based on the Euclidean lengths and the link diameter
+derived from sampling the local intensity, with appropriate
+calibration, to give each link a weight that depends on its
+length (l ) and cross-sectional area (a). Each cord is modelled
+as a cylinder packed with identical hyphae, rather than
+a single tube that increases in diameter, although the internal
+structure of cords can be much more complex (Rayner et al.,
+1985). This approach provides a rapid, robust and extremely
+effective means to extract fungal networks with up to 106 links
+from even low-contrast, noisy images compared to <104 links
+possible with manual digitisation (Obara et al., submitted for
+publication) (Fig. 2).
+3. Characterisation of the network
+Networks extracted using image analysis are strictly
+a subsample of the full network. The improved image analysis
+14 L. Heaton et al.
+techniques described above yield more complete sampling of
+the network architecture down to the level of relatively minor
+cords, but still cannot resolve individual fine hyphae. It is
+know that topological properties of networks and their
+samples can differ (Stumpf et al., 2005). There are geometrical
+reasons to expect that subsamples of planar graphs will
+inherit more of the properties of the full graph, nevertheless
+potential sampling issues still have to be borne in mind
+when considering the results described below.
+The network topology is defined by classifying junctions
+(branch points, anastomoses and the food sources) as nodes,
+and the cords between nodes as links. In general, during
+foraging the number of nodes, number of links and the total
+material in the network, increase through time. However, the
+local scale network evolution is also characterised by selective
+loss of connections and thinning out of the fine mycelium and
+weaker cords (Fig. 1). Thus, fungal networks progress from
+a radial branching tree to a weakly connected lattice-like
+network behind the growing margin, through a process of
+fusion and reinforcement to form loops, and selective removal
+and recycling of redundant material (Bebber et al., 2007a).
+This shift can be quantified by the alpha coefficient (a) or
+meshedness (Haggett and Chorley, 1969; Buhl et al., 2004),
+that gives the number of closed loops or cycles present as a fraction of the maximum possible for a planar network with the
+same number of nodes, according to Euler’s polyhedral
+formula (e.g. Barthelemy, 2010). The alpha coefficient
+measured for Phanerochaete velutina tends to increase from
+near 0, as expected for a branching tree, to around 10e20 % as
+systems become more cross-connected, depending on the
+resource environment (Bebber et al., 2007a). There is considerable variation in the values of a for different species, with
+values generally matching the observed qualitative level of
+cross-linking. However, this measure, like many other graphtheoretic network metrics, can be heavily skewed by parts of
+the network that are perhaps less relevant when considering
+the macroscopic architecture. Thus, the extent and level of
+detail from the peripheral growing region or fine mycelium
+that is included in the analysis can affect a. Nevertheless,
+values of a for fungi are similar to those for networks of tunnels
+in ant galleries (Buhl et al., 2004), Physarum polycephalum (Bebber, Nakagaki and Fricker, unpublished observations) and
+street networks in cities (Cardillo et al., 2006), suggesting that
+addition of up to 20 % of the maximum number of cross-links
+into a planar network maybe sufficient to achieve desirable
+network properties in a range of different scenarios.
+Other topological network measures have not proved to be
+very informative for mycelia as they are heavily constrained
+by the developmental process and crowding effects restricting
+the maximum number of connections possible in a planar
+network (Hitchcock et al., 1996; Barrat et al., 2005; Bebber
+et al., 2007a; Fricker et al., 2007; Lamour et al., 2007). Thus,
+the possible degree (k, Table 1) of each node is limited to 1
+for tips, 3 for branch points or fusion, or occasionally 4 for
+initially overlapping cords that then fuse. Likewise, the
+mean clustering coefficient, C, is of limited relevance for
+fungal networks, as their growth habit effectively precludes
+formation of triads. The frequency distribution of node
+strength (Table 1) shows more diversity than node degree
+alone, and follows an approximately log-normal distribution
+for P. velutina networks (Bebber et al., 2007a). However, we
+have not found evidence for power law relationships that
+have attracted so much attention in analyses of nonbiological networks.
+Fig. 2 e Automated network extraction from a colony of Phallus impudicus grown on compressed soil from a wood-block
+inoculum after 20 d. (a) Extracted network and the source of food overlaid on the input image with the centre line (red),
+branching points (green), endpoints (blue), and food source boundary (magenta). (b) Network with w106 links pseudo-colour
+coded for cord thickness. Scale bar corresponds to 2 cm.
+Analysis of fungal networks 15
+4. Predicted transport characteristics of the
+mycelial network
+As fungal networks are embedded in Euclidean space, it is
+straightforward to measure the Euclidean distance between
+the nodes and compare it with the shortest path through
+the network between two nodes to give a route factor
+(Gastner and Newman, 2006a). Good distribution networks
+should be efficient in the sense that the paths from each
+node to the centre ought to be relatively short and the sum
+of the lengths of all links in the network should be low, so
+that the network is economical to build and maintain. These
+two criteria are often at odds with each other, extra links may
+be needed to reduce the route factor for some given node.
+Nevertheless, Gastner and Newman (2006b) have shown
+that there are solutions to the distribution problem that
+come remarkably close to being optimal in both senses. Interestingly, these theoretically optimal networks bear striking
+visual similarity to fungal networks in the absence of anastomoses (Fig. 3).
+In general, it is important to consider the weights of links
+when considering transport efficiency. In most transport
+networks, the flux through a given link reflects the diameter
+of the pathway as well as just its length used in the calculation
+of the route factor, as longer, thinner cords have greater resistance to flow. In this case the diameter of a network can be
+kept small regardless of the number of nodes that need to be
+connected, or the Euclidean distance between them, as it is
+always possible to increase the weight of some transport
+backbone to provide a ‘short’ route from one side of the
+network to the other (Barrat et al., 2005; Barthelemy, 2010).
+Indeed, much of the literature on optimal transport networks
+is concerned with the optimal distribution of weights for
+a given cost function (Murray, 1926; Sherman, 1981; Maritan
+et al., 1996; West et al., 1997; Rinaldo et al., 2004; Durand,
+2006, 2007; Bohn and Magnasco, 2007; Bernot et al., 2008;
+Corson, 2010; Dodds, 2010; Katifori et al., 2010).
+An overall measure of transport is the average network
+efficiency (E ), defined as the mean of the reciprocal of shortest
+path lengths for transport through the network (Latora and
+Marchiori, 2001, 2003). In isolation, E is not useful without
+some frame of reference. However, it is not straightforward
+to generate suitable reference models to test the extent that
+differential cord weighting improves the performance of the
+network. At present there are no suitable algorithms available
+to generate weighted planar networks with properties that
+mimic fungal networks, although some progress has been
+made with models of related systems such as leaf veination
+networks (Katifori et al., 2010; Katifori and Magnasco, 2011).
+In other areas of network theory, comparisons are typically
+made with a reference network produced by random rewiring
+of the links or randomly reassigning the weights to different
+links. However, neither approach gives an intuitively satisfying model to test performance against, as they have no biological basis. We have previously used a two stage procedure
+to evaluate the performance of the fungal networks (Bebber
+et al., 2007a). In the first step, the Euclidean fungal network,
+based on link length alone, is compared with model networks
+constructed using well defined neighbourhood graphs,
+Fig. 3 e Theoretical optimal network structures that
+minimise route factor and total length. Networks can be
+close to optimal in terms of both route factor and total
+length. In Gastner and Newman’s model (Gastner and
+Newman, 2006a) nodes are randomly distributed in two
+dimensional space with unit mean density, and node 0 is
+designated as the root or source for the network. The
+network grows over time, and at each time step a new link
+is added, connecting a previously unconnected node i to
+some node j that was already part of the network. The
+nodes i and j are chosen such that at each time step the cost
+dij D blj0 is minimised, where dij is the Euclidean distance
+between i and j, lj0 is length through the network from node
+j to the source node 0, and b is a tunable parameter. When
+b [ 0, the shortest possible link is added at every time step.
+The resulting network will have the smallest possible mean
+link length l, but it is likely that the mean route factor q will
+be large. By increasing b the network no longer grows by
+adding the shortest possible link, but the resulting
+networks have route factors which are remarkably close to 1
+(the minimum possible). Each data point on the graph
+represents an example with 10,000 nodes, and the inset
+shows an example network with b [ 0.4. From Gastner and
+Newman (2006a) with permission.
+Table 1 e Definition of some network terms used
+Topology
+measure
+Definition
+Node Branch points, fusions or tips
+Link Connection between two nodes
+Node degree The number of links attached to a node
+Clustering
+coefficient
+A measure of the number of loops of
+length 3 (i.e. a triangle). Values between 0 and 1
+Node strength A measure of the importance of a node,
+determined by summing the weight
+of all links connected to the node
+Link weight A measure reflecting the size (e.g. length,
+cross-section area) or some other property
+relative to other links
+16 L. Heaton et al.
+including the minimum spanning tree (MST) as a lower bound
+for a low cost but vulnerable network, and the Delaunay triangulation (DT), giving an upper bound for a well-connected,
+robust, but expensive network (Buhl et al., 2004; Cardillo
+et al., 2006; Gastner and Newman, 2006b). In the second step
+of analysis, the effect of including a fixed amount of material
+in the network, equivalent to the total material in the real
+network, was examined. Thus, each link in the ‘uniform’
+fungal and model networks was allocated a constant weight,
+such that the total construction cost was the same to explore
+the consequences for transport if the fungus had allocated the
+same amount of resource evenly over the existing or model
+networks. This also allowed comparison with the real, differentially weighted network as the network measures were in
+comparable units.
+The real weighted networks had much shorter physiological paths, especially in the central region, than their corresponding uniform networks (Bebber et al., 2007a). More
+surprisingly, the weighted fungal network efficiency was
+greater than the uniform DT and the uniform MST when
+the predicted transport from just the inoculum (root) to all
+other nodes was considered. Although very well connected,
+the DT performed poorly, as distributing material across the
+large number of links present gave each one low crosssectional area and consequent high resistance. Conversely,
+the MST performed better than the DT as it was populated
+with few, but extremely thick, links. The uniform fungal
+networks were similar in performance to the MST, although
+they clearly have a different architecture, but the fully
+weighted fungal network showed the best predicted transport behaviour. Thus, differential weighting of links in the
+real network gave a >4 fold improvement in local efficiency
+in comparison to a fully connected uniform network constructed with the same total cost (Bebber et al., 2007a). The
+ability of fungal networks to modify link strengths in
+a dynamic way is therefore crucial to achieve a high transport capacity.
+Subtle shifts in the predicted transport performance of
+the network as it grows can be identified by which links
+are carrying the greatest number of shortest paths and
+have a high shortest-path betweenness centrality (SPBC)
+(Latora and Marchiori, 2007). The relative importance of
+particular links between the inoculum and added resource,
+as judged by their SPBC, fluctuates in the early stage of
+growth with several cords competing before one thickens
+up sufficiently to achieve dominance (Fricker et al., 2008b,
+2009). Equally, one of the disadvantages of using shortest
+path analysis is that comparable parallel pathways that are
+only marginally longer do not feature in the analysis, but
+might be expected to participate in transport in a real
+system. This highlights one of the major problems with
+using shortest path based summary statistics. Shortest
+path metrics such as diameter, efficiency, or SPBC, are relatively easy to compute, and in each case there is a unique
+solution. However, such measures may be misleading, as
+in actual transport networks material moves along parallel
+flow paths, and not all of the material follows the shortest
+path. It is therefore important to make sure the theoretical
+analyses mirror the actual transport processes occurring
+within the fungal network itself.
+5. Biological observations of network transport
+Many species of fungi forage in heterogeneous environments
+where they have to grow through nutrient deficient regions to
+discover new resources and therefore require some kind of
+transport process to move the resources needed for growth
+from the source of nutrients, to the growing margin. Whilst
+direct uptake and intra-hyphal nutrient diffusion may be
+sufficient to sustain short-range local growth when resources
+are abundant (Olsson, 2001), long-distance translocation is
+required to deliver nutrients at a sufficient rate to growing
+tips, particularly in fungi that grow out extensively from
+organic resources and are therefore too large to distribute
+nutrients through diffusion alone (Wells and Boddy, 1995;
+Wells et al., 1995; Davidson and Olsson, 2000; Boswell et al.,
+2002, 2003, 2007). Remarkably little is known about the mechanism(s) underpinning such long-distance nutrient translocation, but the mechanisms proposed include vesicles moved by
+motor proteins (Steinberg, 2007), contractile elements
+(Jennings, 1987), diffusion through the vacuole system
+(Darrah et al., 2006), carefully regulated osmotic gradients
+(Jennings, 1987; Cairney, 1992) and mass flows, discussed in
+detail below. There is also increasing evidence that a wide
+range of macromolecules can be translocated within the
+mycelium, including quantum dots (Whiteside et al., 2009)
+and proteins (Woolston et al., 2011). Conversely, water films
+on the surface of the network itself provide a highway for
+movement of bacteria, effectively bridging gaps between soil
+particles (Kohlmeier et al., 2005; Wick et al., 2010).
+At the microscopic scale GFP tagged proteins, chemical
+stains and quantum dots (Jennings, 1987; Cairney, 1992; Lew,
+2005; Whiteside et al., 2009) suggest that hyphae contain
+both mass flow of fluid, and active transport mechanisms.
+For example, there is evidence that motor proteins and the
+cytoskeleton play a role in nuclear migration and positioning
+(Suelmann and Fischer, 2000), but live imaging of growing
+hyphae also indicates that mass flow of the cytoplasm is the
+dominant factor driving nuclear translocation (Lew, 2005;
+Ramos-Garcia et al., 2009). Additional direct evidence for
+mass flows within apical hyphae is through injection of oil
+droplets using a pressure probe to observe flow of the cytoplasm (Lew, 2005). These inert droplets move at the same
+rate (w0.2 mm s1
+) as the other contents of the hyphae, indicating that a mass flow of fluid is responsible for much of
+the observed motion, rather than motor proteins interacting
+with the cytoskeleton or other specific molecular interactions.
+At a larger scale, radio-labelled carbon and phosphate have
+been observed to move over distances and time scales that
+cannot be explained by diffusion alone (Jennings, 1987;
+Cairney, 1992; Wells and Boddy, 1995; Wells et al., 1995;
+Olsson and Gray, 1998; Lindahl et al., 2001; Fricker et al.,
+2008b). For example, velocities in the range 4.4e9.8 mm s1
+have been measured in Armillaria mellea (Jennings, 1987;
+Cairney, 1992), and velocities as large as 5569 mm s1 have
+been measured in Serpula lacrymans (Jennings, 1987; Cairney,
+1992). The extent of connectivity within the network has
+been demonstrated for rhizomorphs of Armillaria (Lamour
+et al., 2007), but it is more difficult to establish whether the
+network can behave as a single contiguous entity for other
+Analysis of fungal networks 17
+species. In addition, it is clear that the fungi have the potential
+for sophisticated control of routing through regulated occlusion of septal pores (Jedd, 2011).
+6. Modelling mass flows
+We infer that mass flow (advection) is likely to be an important, if not the dominant, long-distance transport mechanism
+in larger network forming fungi. However, mass flow in fungi
+does not follow the paradigm for either plant or animal
+vascular systems. Plants drive mass flows in the xylem by
+transpiration from the leaves in an open system. They
+also actively maintain osmotic gradients along the phloem,
+inducing a flow of sap from sources, where water is drawn
+from the surrounding tissue into the sieve-tubes of the
+phloem, to sinks, where water leaves the phloem. Animals
+use hearts or contractile regions to circulate blood through
+hierarchical, fractal-like vascular systems that form a closed
+system (Sherman, 1981). In fungi, cords tend to be insulated
+from the environment by hydrophobic coatings and mass
+flow can only take place when water is able to exit the translocation pathway through either localised exudation (e.g. Serpula lacrymans), evaporation, or by growth itself. As fungal
+colonies form integrated hydraulic systems, the increase in
+volume that results from hyphal growth requires an equivalent uptake of water, or a reduction in the volume of another
+part of the mycelium that leads to growth-induced mass
+flow (e.g. Fig. 4; Heaton et al., 2010). This latter phenomenon
+is particularly significant in experimental microcosms which
+are run at high humidity thus restricting the potential for
+any transpirational mass flows.
+With the advent of a fully digitised time-series of weighted
+networks (Bebber et al., 2007b; Fricker et al., 2007, 2008b, 2009;
+Rotheray et al., 2008; Boddy et al., 2010) it is possible to
+calculate the magnitude of growth-induced mass flow for
+individual colonies (Heaton et al., 2010). In essence, the
+empirically-determined weighted network is recast as an electrical circuit analogue, with conductances dependent on the
+cross-sectional area of the cords and inversely related to their
+length. The total current flowing through the network is estimated from change in the volume of all the cords in the
+network arising from thickening or thinning, or through new
+growth, between two time points (Fig. 4b). With the simplifying assumptions that the volume change represents water
+movement, the inoculum is the source of water (although
+the model accommodates uptake anywhere), and the flows
+minimise the work required to overcome viscous drag, the
+current flowing through every link can be calculated (Fig. 5;
+Heaton et al., 2010). If the total cross-sectional area of the
+growing front is much larger than the cross-sectional area of
+the supporting mycelium, our analysis suggests that because
+of the (effective) incompressibility of aqueous fluids, growth
+itself can drive mass flows which translocate resources
+towards the growing front at velocities that are much greater
+than the velocity of tip growth. The predicted distribution of
+velocities was heavy tailed, with many links carrying low
+velocity mass flows, and a few links carrying high velocity
+mass flows. Nevertheless, the velocities predicted for the
+major cords were in reasonable agreement with experimental
+data for radiolabel transport, and the pressure gradients
+needed to produce these flows are small. Furthermore, cords
+that were predicted to carry fast-moving or large currents
+were significantly more likely to increase in size than cords
+with slow-moving or small currents (Heaton et al., 2010).
+We do not yet have methods to measure water movement
+directly in these networks. However, we can image nutrient
+movement by mapping the distribution of the amino-acid
+analogue, 14C-amino isobutyrate (14C-AIB) using photoncounting scintillation imaging (Tlalka et al., 2002, 2007, 2008). 14C-AIB accumulates in the free amino acid pool and is not
+metabolised in a range of woodland fungi so far examined, as
+judged by the lack of incorporation of 14C in other metabolites
+or released as 14CO2, (Watkinson, 1984; Olsson and Gray,
+1998). This allows it to be used as a proxy for nitrogen translocation (Watkinson, 1984) and provides an opportunity to
+compare the predictions made by the theoretical network analysis to the actual pattern of nutrient movement in the
+same microcosms (Fricker et al., 2008c, 2009; Heaton et al.,
+submitted for publication). This requires a significant extension
+Fig. 4 e Physical principles of growth-induced mass flow.
+(a) Turgor pressure is induced by an osmotic gradient at the
+site of water uptake. Vesicles (circles) have to deliver material
+to the tip and must move towards the tip faster than it grows,
+while the cytosol behind the growing tip moves forward at
+the rate of tip growth (Lew, 2005). Conservation of volume
+dictates that as the tip expands, fluid flows towards the tips
+from the site of water uptake creating a mass flow.
+(b) Suppose that a fungus grows out of an inoculum (square)
+and into a region (oval). Some of the material that becomes
+part of the fungi may come from within the oval region. The
+rest of the material must have travelled along the cords
+(links) that cross the region’s boundary. If the volume of fungi
+within the region increases by DV over a period of time t, and
+none of the material is drawn from within the region, it
+follows that the average current flowing into the region is
+DV/t. Furthermore, if the total cross-sectional area of the
+boundary crossing cords is a, the mean velocity of flow will
+be DV/at (Heaton et al., 2010).
+18 L. Heaton et al.
+of the growth-induced mass flow model to incorporate the fate
+of a nutrient loaded into the transport pathway which will also
+become dispersed by diffusion (Lew, 2011), and potentially
+taken out of the pathway during transit to maintain the
+network itself (Heaton et al., submitted for publication).
+The predictions made by such an Advection-DiffusionDelivery (ADD) model provide an extraordinarily high level
+of explanatory power for the measured distribution of
+14C-AIB in networks of P. velutina (Fig. 6; Heaton et al.,
+submitted for publication). This is a marked improvement
+over our previous analysis of 14C-AIB distribution patterns
+based on the static network architecture or shortest-path
+betweenness centrality, which only showed correlation in
+regions of the network where transport actually occurred
+(Fricker et al., 2008b, 2009). The ADD model suggests that the
+minimum currents consistent with the observed growth
+Fig. 5 e Network development and predicted currents in Phanerochaete velutina based on a growth-induced mass flow model.
+Images (aec) show network development after 19 d, 25 d and 32 d respectively. The image intensity of cords was used to
+estimate their thickness, enabling the production of weighted, digitised networks (def). These are colour coded to show the
+estimated thicknesses of all sections of all links, while the white block represents the inoculum. Images (gei) are colour
+coded according to the total volume that has passed through each cord, as calculated from a growth-induced mass flow
+model (Heaton et al., 2010).
+Analysis of fungal networks 19
+would effectively transport resource from the inoculum to the
+growing tips over the timescale of growth. Nevertheless,
+whilst advective mass flows carry resource over long
+distances from the inoculum out towards the growing tips
+(Jennings, 1987; Cairney, 1992; Olsson and Gray, 1998), diffusion and active transport mechanisms may be essential near
+the sites where the cell wall is expanding. This follows
+because the cytosol within the apical hyphae moves forward
+at the same rate as the growing tips (Lew, 2005), but to transport resource from the base of these hyphae to the growing
+tips, the resource has to move faster than the rate of growth.
+7. Biophysical consequences of mass flows
+The incompressibility of the fluids within fungi ensures that
+there is a rapid global response to local fluid movements.
+Furthermore, the velocity of fluid flow is a local signal that
+can convey quasi-global information about the role of a cord
+within the mycelium. There was a correlation between the
+thickening of cords and the speeds or flux densities predicted
+by the ADD model (Heaton et al., submitted for publication).
+Similarly, there was a positive correlation between predicted
+current and the thickening of cords. This is consistent with
+the plausible assumption that P. velutina has evolved to reduce
+the work needed to overcome viscous drag, as significantly
+greater energy savings can be made by preferentially thickening the high current cords. The speeds predicted by the
+ADD model are consistent with experimental data. For
+example, a radio-labelled source of carbon has been measured
+moving at a velocity 7 mm s1 away from the inoculum. This is
+the same order of magnitude that the ADD model predicts for
+a major cord. The pressure gradients required to produce the
+predicted flows are very modest and unlike previous analyses
+(Jennings, 1987; Rayner, 1991; Lew et al., 2004), it was suggested
+that intrahyphal concentration gradients are not strictly
+necessary for the production of mass flows.
+In other vascular systems with nutrient distribution
+involving mass flows, a local adaptive response to wall shear
+stress is a key mechanism that enables the optimisation of
+the network (Kamiya et al., 1984; Pries et al., 2009). Flow velocities are of the order 1001000 mm s1 in these systems and
+induce wall shear stresses of the order 0.1e1 Nm2
+. Flows in
+fungi are much lower than this, nevertheless, the wall shear
+stress will be greater in the septal pores, because at that point
+the same current that is passing through the hyphae or transport vessels must pass through a smaller channel, which
+means the local velocity of flow must be greater. If the mass
+Fig. 6 e Measured and predicted patterns of 14C-AIB distribution in networks of Phanerochaete velutina. (a) Mycelial network of
+Phanerochaete velutina, photographed just before 14C-AIB was added to the inoculum. (b) Photon-counting scintillation image
+of 14C-AIB distribution integrated over 32 h. The brightness of the image reflects the total number of photons emitted from
+each region. (c) Measurement of 14C-AIB label from (b) using a superimposed manually digitised network, coloured to
+indicate the photon count. Links that were not covered by the scintillation screen are coloured black. (d) Predicted 14C-AIB
+intensity from the ADD model (Heaton et al., submitted for publication), with the assumption that AIB enters the network at
+the inoculum at a constant rate, each link in the final network continues to grow (or shrink) at the same rate that was
+observed over the final time step, and 10 % of each cord is occupied by transport vessels. (e) Predicted intensity under the
+same assumptions as (d), except that in this case 20 % of each cord is assumed to be occupied by transport vessels.
+20 L. Heaton et al.
+flows also pass through the much smaller vessels that are
+found within cords, or if the shear wall stress is detected at
+the septal pores, fungi could plausibly detect velocities of
+the order 10 mm s1
+. It is less likely that fungi can detect the
+difference between currents with a mean velocity much
+smaller than this, as the corresponding changes in wall shear
+stress would be very small, even in the vessels whose diameter is only 2 mm.
+As well as experiencing wall shear stress, the vessels
+within pressure driven vascular systems also experience
+intramural stress. This force per unit area is experienced
+throughout the vessel wall (and not just on the inside surface),
+as the vessel must resist the tendency to expand or burst.
+Hyphae and transport vessels are subject to several atmospheres of pressure (about 4e5 bar) (Money, 1990, 1997; Lew
+et al., 2004; Lew, 2005, 2011; Money, 2008) and the fluids within
+these structures flow at a very modest rate (Wells et al., 1995;
+Olsson and Gray, 1998; Tlalka et al., 2002, 2008; Lew, 2005;
+Fricker et al., 2008b). Consequently, the intramural stress will
+be orders of magnitude greater than the shear wall stress.
+Nevertheless, this does not mean that it is implausible that
+fungi are sensitive to changes in wall shear stress. The cell
+wall must be rigid enough to withstand the intramural stress
+(Money, 1997, 2008; Harold, 2002; Lew, 2011), but proteins
+embedded in the lipid membranes of tethered organelles, or
+in the septal pores (where the velocity of flow and the wall
+shear stress will be greatest) may be sensitive to the scale of
+flows within a fungal network.
+The curvature of vessels can have important effects on the
+fluid flows within them (Truskey et al., 2010), particularly if
+flow rates are high, the vessel is large and the radius of curvature tight. Whilst this is an important issue for the major
+curved arteries of the human vascular system, in the case of
+fungal networks we estimate the effect of curvature on fluid
+flows is negligible.
+The importance of localising water uptake
+The efficiency of growth-induced mass flows as a means of
+transport requires that water uptake and growth are spatially
+separated. If water uptake occurs throughout the network,
+growth-induced mass flows will still occur, but the scale of
+advection will be significantly reduced (Fig. 7). For example,
+in a linear network, switching from water uptake at one end
+to water uptake throughout the link will halve the scale of
+mass-flow. In the case of a branching network the reduction
+in advection can be much greater. For example, if water
+uptake occurs throughout a branching network of unit
+cross-sectional area the velocity of mass flow would equal
+the velocity of tip growth v in every link, regardless of its
+generation (Fig. 7). This contrasts dramatically with the case
+where all the water uptake occurs at the inoculum. In the
+case where there are n generations in the tree and the link
+in question is part of generation i, the mean velocity is v2ni
+rather than v (Fig. 7).
+The ADD model also helps to explain previously challenging experimental observations, most notably, the occurrence of sudden route switching (Fricker et al., 2008b), now
+interpreted as a change in relative distal growth, and the
+colony-wide coupling of polarised transport and growth
+arrest at sites remote from encounter with a new food
+resource (Tlalka et al., 2008). As growth, mass-flow and
+nutrient transport are coupled, there may be an interesting
+interaction between nutrient availability, control of branching and nutrient transport. It is well known that the rate of
+hyphal branching increases when tips encounter resource
+rich environments (Boswell et al., 2003, 2007; Falconer et al.,
+2005; Tlalka et al., 2008) which will give an increase in flux
+density in this region. If the rate of input from the inoculum
+remains similar, there has to be a concomitant reduction in
+fluxes elsewhere, in line with experimental observations
+(Tlalka et al., 2008).
+By contrast, it is difficult to reconcile growth-induced mass
+flows, which might be expected to be directed apically, with
+observations of bi-directional radiolabel movement (Lindahl
+et al., 2001; Tlalka et al., 2007, 2008). At the growing margin,
+one of the potential roles of the tubular vacuolar system
+may be to provide an alternative pathway from the cytoplasm
+to allow basally directed diffusive transport of acquired
+solutes (Darrah et al., 2006). In regions more distal from the
+tip, bi-directional movement might involve establishing an
+anti-parallel circulation system within individual cords
+(Fricker et al., 2007). However, there is currently no direct
+evidence for such a system and it is still challenging to
+conceive how such loops would be able to re-configure themselves as the network architecture is remodelled.
+Fig. 7 e Velocities in a branching network with different patterns of water uptake. (a) If water uptake only occurs in the first
+link, the velocity of mass flow halves from one generation to the next. (b) If water uptake occurs evenly throughout the
+network, the velocity may be constant throughout.
+Analysis of fungal networks 21
+8. Network robustness
+High transport capacity and low construction cost could have
+come at the expense of other network properties, such as
+robustness to damage, as there is no a priori reason why link
+weight allocation for one feature necessarily enhances
+another. Robustness to damage from physical breakage or
+grazing by invertebrates (Harold et al., 2005; Bretherton et al.,
+2006; Wood et al., 2006; Boddy and Jones, 2007), is of major
+significance to long-lived mycelial systems.
+This can be appreciated by examining the effects of
+breaking links in models of the fungal networks and assessing
+the impact on transport or overall connectivity (Bebber et al.,
+2007a; Lamour et al., 2007; Rotheray et al., 2008; Boddy et al.,
+2010). We note that cords (links) are the biologically relevant
+target for attack rather than nodes in non-biological systems.
+In natural systems, which links are broken depends on the
+agent causing damage.With invertebrate grazing, for example,
+different species graze in different ways: collembolan often
+target fine mycelium, millipedes graze arcs at growing fronts,
+and woodlice often devour mycelium in long straight paths
+(Crowther et al., 2011a, b, c, in press). These different grazing
+patterns have not yet been mimicked in artificial experiments
+on digitised networks in silico. Rather, links have been broken
+at random or by targeting critical connections (Fig. 8; Lamour
+et al., 2007), or in an order assuming that the probability of
+breakage increased with length and decreased with the thickness of the link (Bebber et al., 2007a). Robustness was measured
+by the size of the connected components remaining or the
+transport efficiency, and compared to standard networks
+such as the DT or MST (e.g. Fig. 8; Bebber et al., 2007a; Lamour
+et al., 2007). Having a large number of alternate pathways is
+important in this context, and the differential strengthening
+of links not only imparts high transport capacity but also
+robustness to damage (Bebber et al., 2007a).
+A static analysis of the network represents a minimum
+estimate of the real network resilience in nature, as the
+network is also able to respond to local damage, by modification of adjacent link strength, and to regrow and reconnect.
+Thus, for example, local mechanical damage to a small region
+of the network promotes strengthening of distal circumferential connections (Fricker et al., 2009), whilst continuous
+collembolan grazing trims the network back to the reinforced
+core (Fig. 9; Rotheray et al., 2008; Boddy et al., 2010), in support
+of the in silico predictions, but also promotes an increase in
+tangential connections making the network more resilient,
+at the cost of a reduction in exploration (Fricker et al., 2007,
+2009; Rotheray et al., 2008; Boddy et al., 2010). Since different
+species have different mycelial architecture, not surprisingly
+they have different resilience to damage depending on the
+extent of connectivity. In general, a high degree of connectivity confers greater resilience, but this comes at an increased
+cost in terms of more material in the network or a reduction in
+exploratory growth (e.g. Fig. 9).
+9. Comparison with transport networks in
+other domains
+The challenges that balancing the competing demands of cost,
+efficiency, resilience and control complexity place on the
+Fig. 8 e Rhizomorph network of Armillaria lutea growing over an area of 25 m2 in a Pinus nigra plantation. (a) A manually
+extracted planar graph in which the 107 vertices (nodes) and 169 edges (links) have been numbered. (b) The minimal
+spanning tree for the same node positions as (a).
+Disruption of two critical links (78 or 81) would lead to large parts (13 % and 11 %) being disconnected from the remainder of
+the mapped network. However, there is a low probability that amputation of a randomly chosen link would separate the
+network into two disconnected components. The high level of connectedness may enhance redistribution of nutrients and
+provide a robust rhizomorph structure, allowing Armillaria to respond opportunistically to spatially and temporally changing
+environments. From Lamour et al. (2007) with permission.
+22 L. Heaton et al.
+network organisation have strong parallels with those faced
+in the design of anthropogenic infrastructure networks. We
+note, however, that the fluidic character of fungal networks
+makes them unusual since it allows information to spread
+across the system on very fast timescales. The solutions that
+fungi achieve may represent good compromises to such
+a combinatorial optimisation problem, and may yield useful
+insights into the design of delocalised, robust infrastructure
+networks that operate without central control. This presumes
+that solutions adopted by biological networks will exemplify
+useful generic theoretical principles, such as persistence,
+robustness, error-handling or appropriate redundancy, as
+they have been honed by evolution. The expectation is that
+the process of Darwinian natural selection based on variation,
+competition and survival has explored a significant range of
+possible network organisations and the resulting systems
+are likely to be well-adapted to survive and reproduce under
+particular biotic and abiotic conditions to solve certain ecological problems (Fricker et al., 2009). A range of network architectures, development and dynamics can be found within the
+fungi and myxomycetes, suggesting a comparative approach
+may be instructive. However, the constraints imposed by the
+components used to construct the network (i.e. branching
+tubes) may have a profound effect on the possible network
+organisation and dynamics, so that any result can only be
+generalised to a very limited set of real-world problems.
+Fig. 9 e Link evolution in colonies of Phanerochaete velutina in response to grazing. Mycelial systems of P. velutina grown from
+beech wood blocks in trays (57 3 57 cm) of compressed non-sterile soil. For display, images were processed by background
+subtraction, contrast limited histogram equalisation, contrast stretching and look-up table inversion to give black-on-white
+representations of the colony morphology. Superimposed pseudo-colour display of the evolution of each link in networks
+with new resources added at 36 d (R) for three replicate ungrazed colonies (aec) and three colonies with grazing Collembola
+added at 49 d (def). Link evolution was calculated as the ratio between the sum of the differences in link diameter between
+successive time-points and the maximum difference over the whole time period. Continuous growth is indicated by red,
+continuous regression of cords by blue and cords that remain constant throughout are indicated by green. The position
+of Perspex lid supports are indicated by dotted outlines. I [ inoculum, scale bar [ 10 cm. From Boddy et al. (2010) with
+permission.
+Analysis of fungal networks 23
+Transport costs and optimal transport networks
+The design of optimal distribution networks for water, electricity, telephone signals, etc is of great practical import in
+urban planning, and consequently aspects of this family of
+problems have been studied since antiquity. Over the last
+15 y, a string of papers has explored the topic of transport
+networks that are optimal in some given sense. Some authors
+have pursued highly abstract models which assess the cost of
+different ways of connecting source nodes to sinks (with
+a variety ways of assessing the cost of any given pattern of
+flow) (Maritan et al., 1996; Banavar et al., 2000a, b, 2002, 2010;
+Dreyer, 2001; Dreyer and Puzio, 2001; Bohn and Magnasco,
+2007; Bernot et al., 2008; Corson, 2010; Dodds, 2010),
+others have focussed on the general properties of networks
+with flows driven by potential differences (Sherman, 1981;
+Durand, 2006, 2007; Katifori et al., 2010), while West and
+colleagues consider the optimum network given a number of
+biologically inspired assumptions (West et al., 1997, 1999a,
+2002; West and Brown, 2004; Savage et al., 2008). The papers
+by Banavar and West are particularly notable, as they played
+a key role in the development of the theory of allometric
+scaling, which attempts to explain the relationship between
+body size and metabolic rate.
+Different studies use different definitions of a network, and
+the authors optimise different cost functions. For example,
+Durand (Durand, 2006, 2007) considers the optimal geometry
+and the relationship between the local geometry and the local
+topology of hydraulic networks whose currents derive from
+a potential, explicitly analogous to electrical networks, that
+are embedded in an ambient space. In contrast, Banavar
+et al. (2000a, b, 2002, 2010) propose a more abstract model
+where the graph is not assumed to be embedded in a target
+space, and the currents through the nodes are not explicitly
+constrained to derive from a potential difference.
+A very general observation at the heart of the analysis by
+Banavar and colleagues is that any efficient flow pattern
+must be such that at every point, the flow moves materials
+away from the source. In other words, although there may
+be loops in the networks they consider, optimally efficient
+flows always transport materials in a directed manner. This
+feature of ‘efficient’ material flows is common to many definitions of ‘efficient’ (Sherman, 1981; Maritan et al., 1996; West
+et al., 1997, 1999a, 2002; Banavar et al., 1999, 2000a, b, 2002,
+2010; Dreyer, 2001; Dreyer and Puzio, 2001; Colizza et al.,
+2004; Rinaldo et al., 2004; West and Brown, 2004; Durand,
+2006, 2007; Bernot et al., 2008; Savage et al., 2008; Corson,
+2010; Dodds, 2010; Katifori et al., 2010), and it is inevitable
+when the flows are driven by differences in potential.
+Banavar and colleagues abstract approach enables the
+construction of formal proofs concerning optimal networks,
+but the proper physical interpretation of those results is somewhat elusive (Bohn and Magnasco, 2007). A different approach,
+taken by West and colleagues builds on the legacy of Cecil D.
+Murray, and the principle of minimum work (Murray, 1926;
+Sherman, 1981; West et al., 1997, 1999b, 2002; West and
+Brown, 2004; Savage et al., 2008). Fluid flow is essential to
+most biological transport networks, and so cost functions
+that reflect the energy required to overcome viscous drag are
+of particular biological significance. Murray observed that
+vascular networks represent an optimal or near optimal
+compromise between conflicting costs, as the work required
+to overcome viscous drag is much smaller in large vessels,
+but this benefit of thickening is offset by a cost, and as a simplifying assumption it is reasonable to assume that the metabolic
+cost of building and maintaining a vessel is proportional to its
+volume. The optimal arrangement is when the cube of the
+radius of the parent vessel equals the sum of the cubes of the
+radii of the daughters (Murray’s law). Actual vascular systems
+approximately follow Murray’s law (Sherman, 1981; Sherman
+et al., 1989; McCulloh et al., 2003; Kassab, 2006; Savage et al.,
+2008), but it is worth noting that significant deviations from
+Murray’s law can result in only modest increase in the amount
+of energy required to overcome viscous drag (Sherman et al.,
+1989; Truskey et al., 2010).
+Fluctuating demand, robustness and loops
+Although vascular networks are frequently depicted as
+branching trees (Bernot et al., 2008; Pries et al., 2009), many
+natural and almost all man made networks contain loops.
+Street plans are full of loops, most fungal networks contain
+loops (Bebber et al., 2007a; Fricker et al., 2007, 2008a, 2009;
+Boddy et al., 2009, 2010), as do retinal vasculatures (Fruttiger,
+2002), and the veins of many leaves contain recursively nested
+sets of loops (Roth-Nebelsick et al., 2001; Durand, 2006; Sack
+and Holbrook, 2006; Corson et al., 2009; Corson, 2010; Katifori
+et al., 2010). Recent theoretical analyses indicate that if
+a network is attacked, or subject to fluctuating loads, the
+optimal form is no longer a branching tree but will contain
+loops (Corson et al., 2009; Corson, 2010; Katifori et al., 2010;
+Katifori and Magnasco, 2011).
+Optimisation under damage to links implies the formation
+of loops almost by definition, as if there were only one route
+connecting the source and a given sink, an infinite amount
+of power would be dissipated when that route is cut. Robustness to damage can be conferred by a (topologically
+minimum) ring joining the outermost nodes (Roth-Nebelsick
+et al., 2001), and more generally it is well known that redundant links can confer a degree of robustness to a transport
+network (Roth-Nebelsick et al., 2001; Rinaldo et al., 2004; Sack
+and Holbrook, 2006; Fricker et al., 2007, 2009; Barthelemy,
+2010). Plants and fungi are under constant attack, from the
+elements as well as pathogens and a wide variety of grazing
+animals (Roth-Nebelsick et al., 2001; Sack and Holbrook,
+2006; Rotheray et al., 2008; Boddy et al., 2010; Crowther et al.,
+2011a, b, c, in press). If fungal networks were branching trees,
+severing any branch would disconnect the network. Likewise,
+if the leaf vascular network was treelike, damage to any vein
+would result in the death of all the leaf sections downstream
+from that vein. The value of redundant links is therefore quite
+clear, but optimality under robustness to damage can produce
+hierarchical, recursively nested loops (Katifori et al., 2010;
+Katifori and Magnasco, 2011), as can be found in actual leaf
+venation networks (Roth-Nebelsick et al., 2001; Sack and
+Holbrook, 2006).
+Katifori et al. (2010, 2011) and Corson et al. (2009, 2010) also
+show the importance of fluctuating demand for optimal transport networks. Many definitions of optimality yield treelike
+structures, with a single path connecting any two points
+24 L. Heaton et al.
+(Sherman, 1981; Banavar et al., 1999, 2000a, b; Durand, 2006,
+2007; Bohn and Magnasco, 2007; Bernot et al., 2008). In this
+light, the many loops found in leaf venation networks, fungal
+networks or vascular networks could be interpreted as
+a compromise between transport efficiency and other requirements, such as tolerance to damage. However, Katifori et al.
+and Corson et al. show that the optimality of branching trees
+is contingent on the assumption of a stationary flow through
+the network. By contrast, they found that optimisation under
+a varying load leads can lead to the formation of dense, recursively looped structures (Corson et al., 2009, 2010; Katifori et al.,
+2010; Katifori and Magnasco, 2011). More specifically, when
+time variations or fluctuations are allowed for, the resulting
+optimal structures contain loops, although they do share the
+hierarchical organisation that is characteristic of treelike
+optimal networks.
+This result is biologically very significant, as in general
+biological transport networks operate in the face of considerable spatiotemporal irregularities. As fungal networks grow
+and the supporting mycelium matures, different parts of
+the growing margin will need to be supplied with resources
+at different times. If fungal networks have indeed evolved
+to maximise transport efficiency, they should be optimal in
+relation to a history of transport demands, and we should
+not necessarily expect that at any instant the network is
+the best way of linking the sites of resource uptake with
+the sites of resource demand. Nevertheless, we note that
+fungal transport networks have unusual features compared
+to the preceding models of networks for the delivery of nutrients. The fungal network is both a transport system and the
+organism itself. Fungal networks are vastly more dynamic
+than vascular networks in plants and humans and it seems
+that fungi use their networked state to process their environment, possibly using their fluid based nature to rapidly
+couple behaviour even in disparate parts of themselves.
+This type of analysis has strong parallels with the conceptual
+ideas set out by Rayner two decades ago (Rayner, 1991;
+Rayner et al., 1994, 1999).
+10. Future developments
+Characterisation of mycelial networks is still in its infancy.
+However, the network approach provides a way of quantifying
+and analysing complex fungal systems in detail, and also
+makes it possible to link measurements in laboratory microcosms to observations of networks in the field. The simplest
+models predicting transport through such networks are based
+on shortest path considerations through the weighted
+network and are relatively straightforward to calculate, but
+only capture part of the experimentally determined transport
+behaviour. Models that include parallel-flow pathways
+coupled to the empirically-measured growth of the network
+improve the match between simulation and experiment
+significantly and explain several previously challenging
+empirical observations. The next conceptual advance will be
+to identify the rules that allow the network iteratively to refine
+its structure and transport behaviour to yield the network
+architectures observed. It is conceivable that the identification
+of such rules will allow development of generic “fungal colony
+optimisation” (Hanson et al., 2006; Xu et al., 2009) algorithms
+similar to those that have evolved from the study of ant colony
+foraging patterns (Dorigo et al., 1999) or based on Physarum
+(Tero et al., 2006, 2007, 2008; Nakagaki et al., 2007; Watanabe
+et al., 2011).
+Even at this stage, some common features of biological
+network formation seem to emerge. Fungal networks are constructed by local iterative developmental processes rather
+than predetermined blueprints or centralised control, with
+growth involving over-production of links and nodes, followed by selective pruning of some links and reinforcement
+of others. Such a process mimics the process of Darwinian
+evolution in which natural selection removes less fit offspring.
+This ‘Darwinian network model’ may be applicable to other
+biological systems, including foraging ant trails, Physarum,
+axon development and angiogenesis, and may represent a
+generalised model for growth of physical biological networks.
+Based on the ant colony and Physarum models, we might
+expect the generic ingredients in such a model will involve
+a non-linear positive reinforcement term related to the local
+flux and a linear decay term. Notably this model differs from
+other models of weighted network evolution that only incorporate differential strengthening of links, i.e., ‘the busiest
+get busier’, rather than additional differential weakening
+and loss that is the hallmark of evolution by natural selection.
+However, the model has parallels with the selective link
+removal model proposed for unweighted networks (Salathe
+et al., 2005). In infrastructure networks where costs are associated with creation and maintenance of links, where links
+differ in some measure of fitness, and where material can be
+recycled, such a Darwinian model may be applicable. In practical terms such a process may also be witnessed in the evolution of real infrastructure networks, such as British railways
+following the Beeching reviews in the early 60’s (British
+Transport Commission, 1963; British Railways Board, 1965).
+In these reviews, the flux along various routes was measured
+and routes with too low a level of traffic, mainly branch lines,
+were targeted for closure. At the same time, major routes were
+strengthened to cope with the expected sourceesink relationships for both passenger and freight traffic. Interestingly, the
+reports focussed on efficiency rather than any explicit consideration of resilience, which may explain the sensitivity of the
+current network to disruption.
+A second feature of interest emerging, particularly through
+consideration of the Physarum and fungal networks, is the
+extent that coupled flows may contain global information.
+Networks involving physical flows obey continuity equations
+and are therefore intrinsically coupled across the network.
+This automatically means that increasing the flow in one
+part of the network will lead to reductions elsewhere, even
+though the local conditions in the distal region remain the
+same. Thus each part of the network is influenced by and
+can influence the whole network, but without any global
+assessment of behaviour. Useful properties of the network
+may emerge from the interaction between the local update
+rules governing topology and flows without the need for
+long-distance communication or calculation of aggregate
+properties of the network. It is this coupling in the Physarum
+model that allows the network to resolve from a fine mesh
+into a quasi-optimal solution (Tero et al., 2006, 2007, 2008;
+Analysis of fungal networks 25
+Nakagaki et al., 2007). Furthermore, the computational overhead for such self-organised networks scales well with the
+number of additional nodes.
+Set against this progress are some equally difficult challenges. The transition to three dimensions, particularly in
+realistic soil or wood microcosms, is immensely problematic
+for the vast majority of imaging approaches. There is potential
+to record the micro-structure of a porous soil system using
+high-resolution X-ray tomography and then predict the
+behaviour of different fungi using modelling approaches
+(Blair et al., 2007; Pajor et al., 2010), but there is currently not
+sufficient contrast to resolve the actual fungal distribution
+within the soil. Likewise, the observation that fungi can take
+up and translocate quantum dots (Whiteside et al., 2009),
+and the increasing number of species that can now express
+fluorescent proteins (Lorang et al., 2001; Czymmek et al.,
+2004; Leroch et al., 2011) coupled with confocal or multiphoton imaging facilitate 3-D or 4-D data collection from
+living systems (Czymmek, 2005), but only in relatively translucent media to a depth of around 100 mm.
+Acknowledgements
+Research in the authors’ laboratories has been supported by
+BBSRC (43/P19284), NERC (GR3/12946 & NER/A/S/2002/882),
+EPSRC (GR/S63090/01), EU Framework 6 (STREP No. 12999),
+Oxford University Research Infrastructure Fund and the
+University Dunston Bequest. We thank A. Ashford, K. Burton,
+P.R. Darrah, D.P. Donnelly, D. Eastwood, J. Efstathiou, J. Hynes,
+N. Johnson, E. Lopez, P. Maini, F. Reed-Tsochas, M. Tlalka, G.M.
+Tordoff, S.C. Watkinson and members of CABDyN for stimulating discussions.
+references
+Banavar, J.R., Colaiori, F., Flammini, A., Maritan, A., Rinaldo, A.,
+2000a. Topology of the fittest transportation network. Phys.
+Rev. Lett. 84, 4745e4748.
+Banavar, J.R., Damuth, J., Maritan, A., Rinaldo, A., 2002. Supplydemand balance and metabolic scaling. PNAS 99,
+10506e10509.
+Banavar, J.R., Maritan, A., Rinaldo, A., 1999. Size and form in
+efficient transportation networks. Nature 399, 130e132.
+Banavar, J.R., Maritan, A., Rinaldo, A., 2000b. Scaling e rivers,
+blood and transportation networks e reply. Nature 408, 160.
+Banavar, J.R., Moses, M.E., Brown, J.H., Damuth, J., Rinaldo, A.,
+Sibly, R.M., Maritan, A., 2010. A general basis for quarterpower scaling in animals. PNAS 107, 15816e15820.
+Barrat, A., Barthelemy, M., Vespignani, A., 2005. The effects of
+spatial constraints on the evolution of weighted complex
+networks. J. Stat. Mech. P05003.
+Barry, D., Chan, C., Williams, G., 2009. Morphological quantification of filamentous fungal development using membrane
+immobilization and automatic image analysis. J. Ind. Microbiol. Biotechnol. 36, 787e800.
+Barry, D.J., Williams, G.A., 2011. Microscopic characterisation of
+filamentous microbes: towards fully automated morphological
+quantification through image analysis. J. Microsc. 244, 1e20.
+Barthelemy, M., 2010. Spatial networks. Phys. Rep. 499, 1e101.
+Bebber, D.P., Hynes, J., Darrah, P.R., Boddy, L., Fricker, M.D., 2007a.
+Biological solutions to transport network design. Proc. R. Soc.
+B 274, 2307e2315.
+Bebber, D.P., Tlalka, M., Hynes, J., Darrah, P.R., Ashford, A.,
+Watkinson, S.C., Boddy, L., Fricker, M.D., 2007b. Imaging
+complex nutrient dynamics in mycelial networks. In: Gadd, G.,
+Watkinson, S.C., Dyer, P. (Eds.), Fungi in the Environment.
+Cambridge University Press, pp. 3e21.
+Beiler, K.J., Durall, D.M., Simard, S.W., Maxwell, S.A.,
+Kretzer, A.M., 2010. Architecture of the wood-wide web: Rhizopogon spp. genets link multiple Douglas-fir cohorts. New
+Phytol. 185, 543e553.
+Bernot, M., Caselles, V., Morel, J.M., 2008. Optimal Transportation
+Networks: Models and Theory. Springer-Verlag, Berlin.
+Blair, J.M., Falconer, R.E., Milne, A.C., Young, I.M., Crawford, J.W.,
+2007. Modeling three-dimensional microstructure in heterogeneous media. Soil Sci. Soc. Am. J. 71, 1807e1812.
+Boddy, L., 1999. Saprotrophic cord-forming fungi: meeting the
+challenge of heterogeneous environments. Mycologia 91, 13e32.
+Boddy, L., Donnelly, D.P., 2008. Fractal geometry and microorganisms in the environment. In: Senesi, N., Wilkinson, K.J.
+(Eds.), Biophysical Chemistry of Fractal Structures and
+Processes in Environmental Systems. John Wiley, Chichester,
+UK, pp. 239e272.
+Boddy, L., Hynes, J., Bebber, D.P., Fricker, M.D., 2009. Saprotrophic
+cord systems: dispersal mechanisms in space and time.
+Mycoscience 50, 9e19.
+Boddy, L., Jones, T.H., 2007. Mycelial responses in heterogeneous
+environments: parallels with macroorganisms. In: Gadd, G.,
+Watkinson, S.C., Dyer, P. (Eds.), Fungi in the Environment.
+Cambridge University Press, pp. 112e158.
+Boddy, L., Wood, J., Redman, E., Hynes, J., Fricker, M.D., 2010.
+Fungal network responses to grazing. Fungal Genet. Biol. 47,
+522e530.
+Bohn, S., Magnasco, M.O., 2007. Structure, scaling, and phase
+transition in the optimal transport network. Phys. Rev. Lett.
+98, 088702.
+Boswell, G.P., Jacobs, H., Davidson, F.A., Gadd, G.M., Ritz, K., 2002.
+Functional consequences of nutrient translocation in mycelial
+fungi. J. Theor. Biol. 217, 459e477.
+Boswell, G.P., Jacobs, H., Davidson, F.A., Gadd, G.M., Ritz, K., 2003.
+Growth and function of fungal mycelia in heterogeneous
+environments. Bull. Math. Biol. 65, 447e477.
+Boswell, G.P., Jacobs, H., Ritz, K., Gadd, G.M., Davidson, F.A., 2007.
+The development of fungal networks in complex environments. Bull. Math. Biol. 69, 605e634.
+Bretherton, S., Tordoff, G.M., Jones, T.H., Boddy, L., 2006.
+Compensatory growth of Phanerochaete velutina mycelial
+systems grazed by Folsomia candida (Collembola). FEMS
+Microbiol. Ecol. 58, 33e40.
+British Railways Board, 1965. The Development of The Major
+Railway Trunk Routes. British Railways Board.
+British Transport Commission, 1963. The Reshaping of British
+Railways e Part 1: Report. Her Majesty’s Stationery Office.
+Buhl, J., Gautrais, J., Sole, R.V., Kuntz, P., Valverde, S.,
+Deneubourg, J.L., Theraulaz, G., 2004. Efficiency and robustness in ant networks of galleries. Eur. Phys. J. B 42, 123e129.
+Cairney, J.W.G., 1992. Translocation of solutes in ectomycorrhizal
+and saprotrophic rhizomorphs. Mycol. Res. 96, 135e141.
+Cairney, J.W.G., 2005. Basidiomycete mycelia in forest soils:
+dimensions, dynamics and roles in nutrient distribution. Mycol. Res. 109, 7e20.
+Cardillo, A., Scellato, S., Latora, V., Porta, S., 2006. Structural
+properties of planar graphs of urban street patterns. Phys. Rev.
+E 73, 066107.
+Colizza, V., Banavar, J.R., Maritan, A., Rinaldo, A., 2004. Network
+structures from selection principles. Phys. Rev. Lett. 92,
+198701.
+26 L. Heaton et al.
+Corson, F., 2010. Fluctuations and redundancy in optimal transport networks. Phys. Rev. Lett. 104, 048703.
+Corson, F., Adda-Bedia, M., Boudaoud, A., 2009. In silico leaf
+venation networks: growth and reorganization driven by
+mechanical forces. J. Theor. Biol. 259, 440e448.
+Crawford, J.W., Ritz, K., Young, I.M., 1993. Quantification of fungal
+morphology, gaseous transport and microbial dynamics in
+soil e an integrated framework utilizing fractal geometry.
+Geoderma 56, 157e172.
+Crowther, T.W., Boddy, L., Jones, T.H., 2011a. Outcomes of fungal
+interactions are determined by soil invertebrate grazers. Ecol.
+Lett. 14, 1134e1142.
+Crowther, T.W., Boddy, L., Jones, T.H., 2011b. Species-specific
+effects of soil fauna on fungal foraging and decomposition.
+Oecologia 167, 535e545.
+Crowther, T.W., Jones, T.H., Boddy, L., 2011c. Species-specific
+effects of grazing invertebrates on mycelial emergence and
+growth from woody resources into soil. Fungal Ecol. 4, 333e341.
+Crowther T.W., Jones T.H., Boddy L. Interactions between saprotrophic basidiomycete mycelia and mycophagous soil fauna.
+Mycology, in press, doi:10.1080/21501203.2012.656723.
+Czymmek, K.J., 2005. Exploring fungal activity with confocal and
+multiphoton microscopy. In: Dighton, J., White, J.F.,
+Oudemans, P. (Eds.), The Fungal Community: Its Organisation
+and Role in the Ecosystem, pp. 307e330.
+Czymmek, K.J., Bourett, T.M., Howard, R.J., 2004. Fluorescent
+protein probes in fungi. Methods Microbiol. 34, 27e62.
+Darrah, P.R., Tlalka, M., Ashford, A., Watkinson, S.C.,
+Fricker, M.D., 2006. The vacuole system is a significant intracellular pathway for longitudinal solute transport in basidiomycete fungi. Eukaryot. Cell 5, 1111e1125.
+Davidson, F.A., Olsson, S., 2000. Translocation induced outgrowth
+of fungi in nutrient-free environments. J. Theor. Biol. 205,
+73e84.
+Dodds, P.S., 2010. Optimal form of branching supply and collection networks. Phys. Rev. Lett. 104, 048702.
+Dorigo, M., Di Caro, G., Gambardella, L.M., 1999. Ant algorithms
+for discrete optimization. Artif. Life 5, 137e172.
+Dreyer, O., 2001. Allometric scaling and central source systems.
+Phys. Rev. Lett. 8703, 038101.
+Dreyer, O., Puzio, R., 2001. Allometric scaling in animals and
+plants. J. Math. Biol. 43, 144e156.
+Durand, M., 2006. Architecture of optimal transport networks.
+Phys. Rev. E 73, 016116.
+Durand, M., 2007. Structure of optimal transport networks subject
+to a global constraint. Phys. Rev. Lett. 98, 088701.
+Falconer, R.E., Bown, J.L., White, N.A., Crawford, J.W., 2005.
+Biomass recycling and the origin of phenotype in fungal
+mycelia. Proc. R. Soc. B 272, 1727e1734.
+Falconer, R.E., Bown, J.L., White, N.A., Crawford, J.W., 2007.
+Biomass recycling: a key to efficient foraging by fungal
+colonies. Oikos 116, 1558e1568.
+Frangi, A., Niessen, W., Vincken, K., Viergever, M., 1998. Multiscale
+vessel enhancement filtering. In: Wells, W., Colchester, A.,
+Delp, S. (Eds.), Medical Image Computing and Computerassisted Intervention. Springer, Berlin/Heidelberg, pp. 130e137.
+Fricker, M., Boddy, L., Nakagaki, T., Bebber, D.P., 2009. Adaptive
+biological networks. In: Gross, T., Sayama, H. (Eds.), Adaptive
+Networks: Theory, Models and Applications. Springer, pp. 51e70.
+Fricker, M.D., Bebber, D.P., Boddy, L., 2008a. Mycelial networks:
+structure and dynamics. In: Boddy, L., Franklin, J.C., van
+West, P. (Eds.), Ecology of Saprotrophic Basidiomycetes.
+Academic Press, Amsterdam, pp. 3e18.
+Fricker, M.D., Boddy, L., Bebber, D.P., 2007. Network organisation
+of mycelial fungi. In: Howard, R.J., Gow, N.A.R. (Eds.), The
+Mycota. Springer-Verlag, Berlin, pp. 309e330.
+Fricker, M.D., Lee, J.A., Bebber, D.P., Tlalka, M., Hynes, J.,
+Darrah, P.R., Watkinson, S.C., Boddy, L., 2008b. Imaging
+complex nutrient dynamics in mycelial networks. J. Microsc.
+231, 317e331.
+Fricker, M.D., Lee, J.A., Boddy, L., Bebber, D.P., 2008c. The interplay
+between structure and function in fungal networks.
+Topologica 1.
+Fruttiger, M.A., 2002. Development of the mouse retinal vasculature: angiogenesis versus vasculogenesis. Invest. Ophthalmol.
+Vis. Sci. 43, 522e527.
+Gastner, M.T., Newman, M.E.J., 2006a. Optimal design of spatial
+distribution networks. Phys. Rev. E 74, 016117.
+Gastner, M.T., Newman, M.E.J., 2006b. Shape and efficiency in
+spatial distribution networks. J. Stat. Mech., P01015.
+Haggett, P., Chorley, R.J., 1969. Network Analysis in Geography.
+Arnold, London.
+Hanson, K.L., Nicolau, D.V., Filipponi, L., Wang, L., Lee, A.P., 2006.
+Fungi use efficient algorithms for the exploration of microfluidic networks. Small 2, 1212e1220.
+Harold, F.M., 2002. Force and compliance: rethinking morphogenesis in walled cells. Fungal Genet. Biol. 37, 271e282.
+Harold, S., Tordoff, G.M., Jones, T.H., Boddy, L., 2005. Mycelial
+responses of Hypholoma fasciculare to collembola grazing:
+effect of inoculum age, nutrient status and resource quality.
+Mycol. Res. 109, 927e935.
+Harris, S.D., 2008. Branching of fungal hyphae: regulation,
+mechanisms and comparison with other branching systems.
+Mycologia 100, 823e832.
+Heaton, L.L.M., Lopez, E., Maini, P.K., Fricker, M.D., Jones, N.S., 
+2010. Growth-induced mass flows in fungal networks. Proc. R.
+Soc. B 277, 3265e3274.
+Heaton L.L.M., Lopez E., Maini P.K., Fricker M.D., Jones N.S. 
+Advection, diffusion and delivery over a network. Phys. Rev. E,
+submitted for publication.
+Held, M., Edwards, C., Nicolau, D.V., 2011. Probing the growth
+dynamics of Neurospora crassa with microfluidic structures.
+Fungal Biol. 115, 493e505.
+Hitchcock, D., Glasbey, C.A., Ritz, K., 1996. Image analysis of
+space-filling by networks: application to a fungal mycelium.
+Biotechnol. Tech. 10, 205e210.
+Jedd, G., 2011. Fungal evoedevo: organelles and multicellular
+complexity. Trends Cell Biol. 21, 12e19.
+Jennings, D.H., 1987. Translocation of solutes in fungi. Biol. Rev.
+62, 215e243.
+Kamiya, A., Bukhari, R., Togawa, T., 1984. Adaptive regulation of
+wall shear stress optimizing vascular tree function. Bull. Math.
+Biol. 46, H14eH21.
+Kassab, G.S., 2006. Scaling laws of vascular trees: of form and
+function. Am. J. Physiol. Heart Circ. Physiol. 290, H894eH903.
+Katifori, E., Magnasco, M.O., 2011. Quantifying Loopy Network
+Architecture. arXiv:1110.1412v1.
+Katifori, E., Szollosi, G.J., Magnasco, M.O., 2010. Damage and
+fluctuations induce loops in optimal transport networks. Phys.
+Rev. Lett. 104, 048704.
+Knutsson, H., Westin, C.-F., Andersson, M., 2011. Representing
+local structure using tensors II. In: Heyden, A., Kahl, F. (Eds.),
+Image Analysis. Lecture Notes in Computer Science, vol. 6688
+Springer, Berlin, Heidelberg, pp. 545e556.
+Kohlmeier, S., Smits, T.H.M., Ford, R.M., Keel, C., Harms, H.,
+Wick, L.Y., 2005. Taking the fungal highway: Mobilization of
+pollutant-degrading bacteria by fungi. Environ. Sci. Technol.
+39, 4640e4646.
+Kovesi, P.D., 1999. Image features from phase congruency. Videre
+1, 1e26.
+Lamour, A., Termorshuizen, A.J., Volker, D., Jeger, M.J., 2007.
+Network formation by rhizomorphs of Armillaria lutea in
+natural soil: their description and ecological significance.
+FEMS Microbiol. Ecol. 62, 222e232.
+Latora, V., Marchiori, M., 2001. Efficient behavior of small-world
+networks. Phys. Rev. Lett. 87, 198701.
+Analysis of fungal networks 27
+Latora, V., Marchiori, M., 2003. Economic small-world behavior in
+weighted networks. Eur. Phys. J. B 32, 249e263.
+Latora, V., Marchiori, M., 2007. A measure of centrality based on
+network efficiency. New J. Phys. 9, 188.
+Leroch, M., Mernke, D., Koppenhoefer, D., Schneider, P.,
+Mosbach, A., Doehlemann, G., Hahn, M., 2011. Living colors in
+the Gray mold pathogen Botrytis cinerea: codon-optimized
+genes encoding green fluorescent protein and mCherry, which
+exhibit bright fluorescence. Appl. Environ. Microbiol. 77,
+2887e2897.
+Lew, R., Levina, N., Walker, S., Garrill, A., 2004. Turgor regulation
+in hyphal organisms. Fungal Genet. Biol. 41, 1007e1015.
+Lew, R.R., 2005. Mass flow and pressure-driven hyphal extension
+in Neurospora crassa. Microbiology 151, 2685e2692.
+Lew, R.R., 2011. How does a hypha grow? The biophysics of
+pressurized growth in fungi. Nature Rev. Microbiol. 9, 509e518.
+Lindahl, B., Finlay, R., Olsson, S., 2001. Simultaneous, bidirectional translocation of 32P and 33P between wood blocks
+connected by mycelial cords of Hypholoma fasciculare. New
+Phytol. 150, 189e194.
+Lorang, J.M., Tuori, R.P., Martinez, J.P., Sawyer, T.L., Redman, R.S.,
+Rollins, J.A., Wolpert, T.J., Johnson, K.B., Rodriguez, R.J.,
+Dickman, M.B., Ciuffetti, L.M., 2001. Green fluorescent protein
+is lighting up fungal biology. Appl. Environ. Microbiol. 67,
+1987e1994.
+Maritan, A., Colaiori, F., Flammini, A., Cieplak, M., Banavar, J.R.,
+1996. Universality classes of optimal channel networks.
+Science 272, 984e986.
+McCulloh, K.A., Sperry, J.S., Adler, F.R., 2003. Water transport in
+plants obeys Murray’s law. Nature 421, 939e942.
+Meijering, E., Jacob, M., Sarria, J.C.F., Steiner, P., Hirling, H.,
+Unser, M., 2004. Design and validation of a tool for neurite
+tracing and analysis in fluorescence microscopy images. Cytometry 58A, 167e176.
+Money, N.P., 1990. Measurement of hyphal turgor. Exp. Mycol. 14,
+416e425.
+Money, N.P., 1997. Wishful thinking of turgor revisited: the
+mechanics of fungal growth. Fungal Genet. Biol. 21, 173e187.
+Money, N.P., 2008. Insights on the mechanics of hyphal growth.
+Fungal Biol. Rev. 22, 71e76.
+Murray, C.D., 1926. The physiological principle of minimum work.
+I. The vascular system and the cost of blood volume. PNAS 12,
+207e214.
+Nakagaki, T., Iima, M., Ueda, T., Nishiura, Y., Saigusa, T., Tero, A.,
+Kobayashi, R., Showalter, K., 2007. Minimum-risk path finding
+by an adaptive amoebal network. Phys. Rev. Lett. 99, 068104.
+Obara, B., Fricker, M.D., Gavaghan, D., Grau, V., 2012 .Jan 27..
+Contrast-independent curvilinear structure detection in
+biomedical images. IEEE Trans Image Process [Epub ahead of
+print].
+Obara, B., Fricker, M.D., Gavaghan, D., Grau, V., 2012. Contrastindependent Junction Detection of Branching Points in
+Network-like Structures. SPIE Medical Imaging, San Diego, CA.
+Obara B., Grau V., Fricker M.D. Bioimage informatics approaches
+for extraction and analysis of fungal networks. Bioinformatics,
+submitted for publication.
+Olsson, S., 2001. Colonial growth of fungi. In: Howard, R.J.,
+Gow, N.A.R. (Eds.), Biology of the Fungal Cell. Springer,
+pp. 125e141.
+Olsson, S., Gray, S.N., 1998. Patterns and dynamics of 32P-phosphate and labelled 2-aminoisobutyric acid (14C-AIB) translocation in intact basidiomycete mycelia. FEMS Microbiol. Ecol.
+26, 109e120.
+Pajor, R., Falconer, R., Hapca, S., Otten, W., 2010. Modelling and
+quantifying the effect of heterogeneity in soil physical conditions on fungal growth. Biogeosciences 7, 3731e3740.
+Pries, A.R., Cornelissen, A.J.M., Sloot, A.A., Hinkeldey, M.,
+Dreher, M.R., Hopfner, M., Dewhirst, M.W., Secomb, T.W., €
+Papin, J.A., 2009. Structural adaptation and heterogeneity of
+normal and tumor microvascular networks. PLoS Comput.
+Biol. 5, e1000394.
+Ramos-Garcia, S.L., Roberson, R.W., Freitag, M., BartnickiGarcia, S., Mourino-P ~ erez, R.R., 2009. Cytoplasmic bulk flow 
+propels nuclei in mature hyphae of Neurospora crassa. Eukaryot. Cell 8, 1880e1890.
+Rayner, A.D.M., 1991. The challenge of the individualistic
+mycelium. Mycologia 83, 48e71.
+Rayner, A.D.M., Griffith, G.S., Ainsworth, A.M., 1994. Mycelial
+interconnectedness. In: Gow, N.A.R., Gadd, G.M. (Eds.), The
+Growing Fungus. Chapman and Hall, London, pp. 21e40.
+Rayner, A.D.M., Powell, K.A., Thompson, W., Jennings, D.H., 1985.
+Morphogenesis of Vegetative Organs, Developmental Biology
+of Higher Fungi. Cambridge University Press, Cambridge.
+249e279.
+Rayner, A.D.M., Watkins, Z.R., Beeching, J.R., 1999. Self-integration e an emerging concept from the fungal mycelium. In:
+Gow, N.A.R., Robson, G.D., Gadd, G.M. (Eds.), The Fungal
+Colony. Cambridge University Press, Cambridge, pp. 1e24.
+Read, N.D., Fleißner, A., Roca, G.M., Glass, N.L., 2010. Hyphal
+fusion. In: Borkovich, K.A., Ebbole, D. (Eds.), Cellular and
+Molecular Biology of Filamentous Fungi. American Society of
+Microbiology, pp. 260e273.
+Read, N.D., Lichius, A., Shoji, J.Y., Goryachev, A.B., 2009. Self-signalling and self-fusion in filamentous fungi. Curr. Opin. Microbiol. 12, 608e615.
+Rinaldo, A., Banavar, J.R., Colizza, V., Maritan, A., 2004. On
+network form and function. Physica A 340, 749e755.
+Ritz, K., Millar, S.M., Crawford, J.W., 1996. Detailed visualisation of
+hyphal distribution in fungal mycelia growing in heterogeneous nutritional environments. J. Microbiol. Methods 25,
+23e28.
+Roth-Nebelsick, A., Uhl, D., Mosbrugger, V., Kerp, H., 2001.
+Evolution and function of leaf venation architecture: a review.
+Ann. Bot. 87, 553e566.
+Rotheray, T.D., Jones, T.H., Fricker, M.D., Boddy, L., 2008. Grazing
+alters network architecture during interspecific mycelial
+interactions. Fungal Ecol. 1, 124e132.
+Sack, L., Holbrook, N.M., 2006. Leaf hydraulics. Annu. Rev. Plant
+Biol. 57, 361e381.
+Salathe, M., May, R.M., Bonhoeffer, S., 2005. The evolution of
+network topology by selective removal. J. R. Soc. Interface 2,
+533e536.
+Savage, V.M., Deeds, E.J., Fontana, W., 2008. Sizing up allometric
+scaling theory. PLoS Comput. Biol. 4, e1000171.
+Selosse, M.A., Richard, F., He, X.H., Simard, S.W., 2006. Mycorrhizal networks: des liaisons dangereuses? Trends Ecol. Evol.
+21, 621e628.
+Sherman, T.F., 1981. On connecting large vessels to small: the
+meaning of Murray’s law. J. Gen. Physiol. 78, 431e453.
+Sherman, T.F., Popel, A.S., Koller, A., Johnson, P.C., 1989. The cost
+of departure from optimal radii in microvascular networks. J.
+Theor. Biol. 136, 245e265.
+Simard, S.W., Beiler, K.J., Bingham, M.A., Deslippe, J.R., Philip, L.J.,
+Teste, F.P., 2012. Mycorrhizal networks: mechanisms, ecology
+and modelling. Fungal Biol. Rev. 26.
+Simard, S.W., Durall, D.M., 2004. Mycorrhizal networks: a review
+of their extent, function, and importance. Can. J. Bot. 82,
+1140e1165.
+Smith, M.L., Bruhn, J.N., Anderson, J.B., 1992. The fungus Armillaria bulbosa is among the largest and oldest living organisms.
+Nature 356, 428e431.
+Southworth, D., He, X.H., Swenson, W., Bledsoe, C.S.,
+Horwath, W.R., 2005. Application of network theory to potential mycorrhizal networks. Mycorrhiza 15, 589e595.
+Steinberg, G., 2007. Hyphal growth: a tale of motors, lipids, and
+the Spitzenkorper. Eukaryot. Cell 6, 351e360.
+28 L. Heaton et al.
+Stumpf, M.P.H., Wiuf, C., May, R.M., 2005. Subnets of scale-free
+networks are not scale-free: sampling properties of networks.
+PNAS 102, 4221e4224.
+Suelmann, R., Fischer, R., 2000. Nuclear migration in fungi e
+different motors at work. Res. Microbiol. 151, 247e254.
+Tero, A., Kobayashi, R., Nakagaki, T., 2006. Physarum solver:
+a biologically inspired method of road-network navigation.
+Physica A 363, 115e119.
+Tero, A., Kobayashi, R., Nakagaki, T., 2007. A mathematical model
+for adaptive transport network in path finding by true slime
+mold. J. Theor. Biol. 244, 553e564.
+Tero, A., Yumiki, K., Kobayashi, R., Saigusa, T., Nakagaki, T., 2008.
+Flow-network adaptation in Physarum amoebae. Theory Biosci.
+127, 89e94.
+Tlalka, M., Bebber, D., Darrah, P.R., Watkinson, S.C., Fricker, M.D.,
+2007. Emergence of self-organised oscillatory domains in
+fungal mycelia. Fungal Genet. Biol. 44, 1085e1095.
+Tlalka, M., Bebber, D.P., Darrah, P.R., Watkinson, S.C.,
+Fricker, M.D., 2008. Quantifying dynamic resource allocation
+illuminates foraging strategy in Phanerochaete velutina. Fungal
+Genet. Biol. 45, 1111e1121.
+Tlalka, M., Watkinson, S.C., Darrah, P.R., Fricker, M.D., 2002.
+Continuous imaging of amino-acid translocation in intact
+mycelia of Phanerochaete velutina reveals rapid, pulsatile fluxes.
+New Phytol. 153, 173e184.
+Truskey, G.A., Yuan, F., Katz, D.F., 2010. Transport Phenomena in
+Biological Systems. Pearson Prentice Hall, New Jersey.
+Tucker, K.G., Kelly, T., Delgrazia, P., Thomas, C.R., 1992. Fullyautomatic measurement of mycelial morphology by image
+analysis. Biotechnol. Prog. 8, 353e359.
+Watanabe, S., Tero, A., Takamatsu, A., Nakagaki, T., 2011. Traffic
+optimization in railroad networks using an algorithm
+mimicking an amoeba-like organism, Physarum plasmodium.
+Biosystems 105, 225e232.
+Watkinson, S.C., 1984. Inhibition of growth and development of
+Serpula lacrymans by the non-metabolized amino-acid analog
+alpha-aminoisobutyric-acid. FEMS Microbiol. Lett. 24, 247e250.
+Wells, J.M., Boddy, L., 1995. Effect of temperature on wood decay
+and translocation of soil-derived phosphorus in mycelial cord
+systems. New Phytol. 129, 289e297.
+Wells, J.M., Boddy, L., Evans, R., 1995. Carbon translocation in
+mycelial cord systems of Phanerochaete velutina (Dc, Pers) Parmasto. New Phytol. 129, 467e476.
+West, G.B., Brown, J.H., 2004. Life’s universal scaling laws. Phys.
+Today 57, 36e42.
+West, G.B., Brown, J.H., Enquist, B.J., 1997. A general model for the
+origin of allometric scaling laws in biology. Science 276,
+122e126.
+West, G.B., Brown, J.H., Enquist, B.J., 1999a. The fourth dimension
+of life: fractal geometry and allometric scaling of organisms.
+Science 284, 1677e1679.
+West, G.B., Brown, J.H., Enquist, B.J., 1999b. A general model for
+the structure and allometry of plant vascular systems. Nature
+400, 664e667.
+West, G.B., Woodruff, W.H., Brown, J.H., 2002. Allometric scaling
+of metabolic rate from molecules and mitochondria to cells
+and mammals. PNAS 99, 2473e2478.
+Whiteside, M.D., Treseder, K.K., Atsatt, P.R., 2009. The brighter
+side of soils: quantum dots track organic nitrogen through
+fungi and plants. Ecology 90, 100e108.
+Whitfield, J., 2007. Fungal roles in soil ecology: underground
+networking. Nature 449, 136e138.
+Wick, L.Y., Furuno, S., Harms, H., 2010. Fungi as transport
+vectors for contaminants and contaminant-degrading
+bacteria. In: Timmis, K.N. (Ed.), Handbook of Hydrocarbon
+and Lipid Microbiology. Springer Berlin, Heidelberg,
+pp. 1555e1561.
+Wood, J., Tordoff, G.M., Jones, T.H., Boddy, L., 2006. Reorganization of mycelial networks of Phanerochaete velutina in response
+to new woody resources and collembola (Folsomia candida)
+grazing. Mycol. Res. 110, 985e993.
+Woolston, B.M., Schlagnhaufer, C., Wilkinson, J., Larsen, J., Shi, Z.,
+Mayer, K.M., Walters, D.S., Curtis, W.R., Romaine, C.P., 2011.
+Long-distance translocation of protein during morphogenesis
+of the fruiting body in the filamentous fungus, Agaricus bisporus. PLoS ONE 6, e28412.
+Xu, H., Falconer, R., Bradley, D., Crawford, J., 2009. FUNNet e
+a novel biologically-inspired routing algorithm based on fungi.

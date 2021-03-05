@@ -1,0 +1,117 @@
+Example 4-6 is a listing of a complete, nontrivial JavaScript program. The program computes the monthly payment on a home mortgage or other loan, given the amount of the loan, the interest rate, and the repayment period. As you can see, the program consists of an HTML form made interactive with JavaScript code. Figure 1-3 shows what the HTML form looks like when displayed in a web browser. But the figure can only capture a static snapshot of the program. The addition of JavaScript code makes it dynamic: whenever the user changes the amount of the loan, the interest rate, or the number of payments, the JavaScript code recomputes the monthly payment, the total of all payments, and the total interest paid over the lifetime of the loan.
+
+A JavaScript loan payment calculator
+Figure 1-3. A JavaScript loan payment calculator
+
+The first half of the example is an HTML form, nicely formatted using an HTML table. Note that several of the form elements define onchange or onclick event handlers. The web browser triggers these event handlers when the user changes the input or clicks on the Compute button displayed in the form. Note that in each case, the value of the event handler attribute is a string of JavaScript code: calculate( ) . When the event handler is triggered, it executes this code, which causes it to call the function calculate( ).
+
+The calculate( ) function is defined in the second half of the example, inside <script> tags. The function reads the user’s input from the form, does the math required to compute the loan payments, and displays the results of these calculations using the bottom three form elements.
+
+Example 1-3 is simple, but it is worth taking the time to look at it carefully. You shouldn’t expect to understand all the JavaScript code at this point, but studying this example should give you a good idea of what JavaScript programs look like, how event handlers work, and how JavaScript code can be integrated with HTML forms. Note that comments (in English) are included within HTML between <!-- and --> markers and within JavaScript code in lines that begin with the characters //.
+
+Example 1-3. Computing loan payments with JavaScript
+
+<head><title>JavaScript Loan Calculator</title></head>
+<body bgcolor="white">
+<!-- 
+  This is an HTML form that allows the user to enter data and allows
+  JavaScript to display the results it computes back to the user. The
+  form elements are embedded in a table to improve their appearance.
+  The form itself is given the name "loandata", and the fields within
+  the form are given names such as "interest" and "years". These
+  field names are used in the JavaScript code that follows the form.
+  Note that some of the form elements define "onchange" or "onclick"
+  event handlers. These specify strings of JavaScript code to be
+  executed when the user enters data or clicks on a button. 
+-->
+<form name="loandata">
+  <table>
+    <tr><td colspan="3"><b>Enter Loan Information:</b></td></tr>
+    <tr>
+      <td>1)</td>
+      <td>Amount of the loan (any currency):</td>
+      <td><input type="text" name="principal" size="12" 
+                 onchange="calculate();"></td>
+    </tr>
+    <tr>
+      <td>2)</td>
+      <td>Annual percentage rate of interest:</td>
+      <td><input type="text" name="interest" size="12" 
+                 onchange="calculate();"></td>
+    </tr>
+    <tr>
+      <td>3)</td>
+      <td>Repayment period in years:</td>
+      <td><input type="text" name="years" size="12" 
+                 onchange="calculate();"></td>
+    </tr>
+    <tr><td colspan="3">
+      <input type="button" value="Compute" onclick="calculate();">
+    </td></tr>
+    <tr><td colspan="3">
+      <b>Payment Information:</b>
+    </td></tr>
+    <tr>
+      <td>4)</td>
+      <td>Your monthly payment will be:</td>
+      <td><input type="text" name="payment" size="12"></td>
+    </tr>
+    <tr>
+      <td>5)</td>
+      <td>Your total payment will be:</td>
+      <td><input type="text" name="total" size="12"></td>
+    </tr>
+    <tr>
+      <td>6)</td>
+      <td>Your total interest payments will be:</td>
+      <td><input type="text" name="totalinterest" size="12"></td>
+    </tr>
+  </table>
+</form>
+
+<!--
+  This is the JavaScript program that makes the example work. Note that
+  this script defines the calculate() function called by the event
+  handlers in the form. The function refers to values in the form
+  fields using the names defined in the HTML code above.
+-->
+<script language="JavaScript">
+function calculate() {
+    // Get the user's input from the form. Assume it is all valid.
+    // Convert interest from a percentage to a decimal, and convert from
+    // an annual rate to a monthly rate. Convert payment period in years
+    // to the number of monthly payments.
+    var principal = document.loandata.principal.value;
+    var interest = document.loandata.interest.value / 100 / 12;
+    var payments = document.loandata.years.value * 12;
+
+    // Now compute the monthly payment figure, using esoteric math.
+    var x = Math.pow(1 + interest, payments);
+    var monthly = (principal*x*interest)/(x-1);
+
+    // Check that the result is a finite number. If so, display the results.
+    if (!isNaN(monthly) && 
+        (monthly != Number.POSITIVE_INFINITY) &&
+        (monthly != Number.NEGATIVE_INFINITY)) {
+
+        document.loandata.payment.value = round(monthly);
+        document.loandata.total.value = round(monthly * payments);
+        document.loandata.totalinterest.value = 
+            round((monthly * payments) - principal);
+    }
+    // Otherwise, the user's input was probably invalid, so don't
+    // display anything.
+    else {
+        document.loandata.payment.value = "";
+        document.loandata.total.value = "";
+        document.loandata.totalinterest.value = "";
+    }
+}
+
+// This simple method rounds a number to two decimal places.
+function round(x) {
+  return Math.round(x*100)/100;
+}
+</script>
+</body>
+</html>

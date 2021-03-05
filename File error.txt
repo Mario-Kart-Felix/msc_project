@@ -1,0 +1,12 @@
+Error TS1149: File name 'C:/Project/frontend/scripts/State.ts' differs from already included file name '../frontend/scripts/State.ts' only in casing.
+
+I've triple checked the casing in our references and the actual files have the correct casing as well. As far as I can tell, this is solely because the relative path uses incorrect casing, or perhaps it's just because of the relative path itself?
+
+The thing is, it compiles just fine on Mac and Linux, but throws this error on Windows.
+
+If it helps, forceConsistentCasingInFileNames is enabled in the tsconfig, and we're using tsify to compile.
+
+javascript
+PSX
+typescript
+compiler-errors
